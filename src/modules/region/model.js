@@ -5,8 +5,14 @@ class Region extends PG {
 		return this.fetchAll(`
          SELECT
                   region_id AS id,
-                  region_name AS name,
-                  region_short_info AS short_info,
+                  region_name_oz AS name_oz,
+                  region_name_uz AS name_uz,
+                  region_name_ru AS name_ru,
+                  region_name_en AS name_en,
+                  region_short_info_oz AS short_info_oz,
+                  region_short_info_uz AS short_info_uz,
+                  region_short_info_ru AS short_info_ru,
+                  region_short_info_en AS short_info_en,
                   region_shrine_count AS shrine_count,
                   region_video AS video,
                   region_photo AS photo,
@@ -24,8 +30,14 @@ class Region extends PG {
 		return this.fetchAll(`
          SELECT
                   region_id AS id,
-                  region_name AS name,
-                  region_short_info AS short_info,
+                  region_name_oz AS name_oz,
+                  region_name_uz AS name_uz,
+                  region_name_ru AS name_ru,
+                  region_name_en AS name_en,
+                  region_short_info_oz AS short_info_oz,
+                  region_short_info_uz AS short_info_uz,
+                  region_short_info_ru AS short_info_ru,
+                  region_short_info_en AS short_info_en,
                   region_shrine_count AS shrine_count,
                   region_photo AS photo
          FROM
@@ -41,8 +53,14 @@ class Region extends PG {
       return this.fetch(`
          SELECT
                   region_id AS id,
-                  region_name AS name,
-                  region_short_info AS short_info,
+                  region_name_oz AS name_oz,
+                  region_name_uz AS name_uz,
+                  region_name_ru AS name_ru,
+                  region_name_en AS name_en,
+                  region_short_info_oz AS short_info_oz,
+                  region_short_info_uz AS short_info_uz,
+                  region_short_info_ru AS short_info_ru,
+                  region_short_info_en AS short_info_en,
                   region_shrine_count AS shrine_count,
                   region_video AS video,
                   region_photo AS photo
@@ -58,11 +76,14 @@ class Region extends PG {
 		return this.fetchAll(`
          SELECT
                   region_id AS id,
-                  region_name AS name
+                  region_name_oz AS name_oz,
+                  region_name_uz AS name_uz,
+                  region_name_ru AS name_ru,
+                  region_name_en AS name_en
          FROM
                   regions
          WHERE 
-                  region_is_delete = false
+                  region_is_delete = false AND region_status = true
          ORDER BY
                   region_id DESC
       `);
@@ -73,8 +94,14 @@ class Region extends PG {
       return this.fetchAll(`
          SELECT
                   region_id AS id,
-                  region_name AS name,
-                  region_short_info AS short_info,
+                  region_name_oz AS name_oz,
+                  region_name_uz AS name_uz,
+                  region_name_ru AS name_ru,
+                  region_name_en AS name_en,
+                  region_short_info_oz AS short_info_oz,
+                  region_short_info_uz AS short_info_uz,
+                  region_short_info_ru AS short_info_ru,
+                  region_short_info_en AS short_info_en,
                   region_shrine_count AS shrine_count,
                   region_video AS video,
                   region_photo AS photo,
@@ -82,7 +109,7 @@ class Region extends PG {
          FROM
                   regions
          WHERE
-                  region_is_delete = false AND (region_name ->> 'oz' LIKE $1 OR region_name ->> 'uz' LIKE $1 OR region_name ->> 'ru' ILIKE $1 OR region_name ->> 'en' ILIKE $1)
+                  region_is_delete = false AND (region_name_oz LIKE $1 OR region_name_uz LIKE $1 OR region_name_ru ILIKE $1 OR region_name_en ILIKE $1)
          ORDER BY
                   region_id DESC
       `, search_data)
@@ -92,8 +119,14 @@ class Region extends PG {
       return this.fetch(`
          SELECT
                   region_id AS id,
-                  region_name AS name,
-                  region_short_info AS short_info,
+                  region_name_oz AS name_oz,
+                  region_name_uz AS name_uz,
+                  region_name_ru AS name_ru,
+                  region_name_en AS name_en,
+                  region_short_info_oz AS short_info_oz,
+                  region_short_info_uz AS short_info_uz,
+                  region_short_info_ru AS short_info_ru,
+                  region_short_info_en AS short_info_en,
                   region_shrine_count AS shrine_count,
                   region_video AS video,
                   region_photo AS photo,
@@ -120,12 +153,18 @@ class Region extends PG {
       `, reg_id)
    }
 
-	ADD_REGION(name, short_info, shrine_count, video, video_name,  photo,  photo_name, status) {
+	ADD_REGION(name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, video, video_name,  photo,  photo_name, status) {
 		return this.fetch(`
          INSERT INTO
                      regions (
-                           region_name,
-                           region_short_info,
+                           region_name_oz,
+                           region_name_uz,
+                           region_name_ru,
+                           region_name_en,
+                           region_short_info_oz,
+                           region_short_info_uz,
+                           region_short_info_ru,
+                           region_short_info_en,
                            region_shrine_count,
                            region_video,
                            region_video_name,
@@ -141,27 +180,39 @@ class Region extends PG {
                         $5,
                         $6,
                         $7,
-                        $8
+                        $8,
+                        $9,
+                        $10,
+                        $11,
+                        $12,
+                        $13,
+                        $14
                      )
-      RETURNING *`, name, short_info, shrine_count, video, video_name,  photo,  photo_name, status);
+      RETURNING *`, name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, video, video_name,  photo,  photo_name, status);
 	}
 
-   UPDATE_REGION(id, name, short_info, shrine_count, video, video_name,  photo,  photo_name, status) {
+   UPDATE_REGION(id, name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, video, video_name,  photo,  photo_name, status) {
       return this.fetch(`
          UPDATE 
                   regions
          SET
-                     region_name = $2,
-                     region_short_info = $3,
-                     region_shrine_count = $4,
-                     region_video = $5,
-                     region_video_name = $6,
-                     region_photo = $7,
-                     region_photo_name = $8,
-                     region_status = $9
+                     region_name_oz = $2,
+                     region_name_uz = $3,
+                     region_name_ru = $4,
+                     region_name_en = $5,
+                     region_short_info_oz = $6,
+                     region_short_info_uz = $7,
+                     region_short_info_ru = $8,
+                     region_short_info_en = $9,
+                     region_shrine_count = $10,
+                     region_video = $11,
+                     region_video_name = $12,
+                     region_photo = $13,
+                     region_photo_name = $14,
+                     region_status = $15
          WHERE 
                   region_id = $1      
-      RETURNING *`, id, name, short_info, shrine_count, video, video_name,  photo,  photo_name, status)
+      RETURNING *`,id, name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, video, video_name,  photo,  photo_name, status)
    }
 
    EDIT_REGION(reg_id, reg_status) {
