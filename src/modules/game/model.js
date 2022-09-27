@@ -5,12 +5,24 @@ class Games extends PG {
       return this.fetchAll(`
          SELECT 
                   game_id AS id,
-                  game_name AS name,
-                  game_title AS title,
-                  game_info AS info,
+                  game_name_oz AS name_oz,
+                  game_name_uz AS name_uz,
+                  game_name_ru AS name_ru,
+                  game_name_en AS name_en,
+                  game_title_oz AS title_oz,
+                  game_title_uz AS title_uz,
+                  game_title_ru AS title_ru,
+                  game_title_en AS title_en,
+                  game_info_oz AS info_oz,
+                  game_info_uz AS info_uz,
+                  game_info_ru AS info_ru,
+                  game_info_en AS info_en,
                   game_video AS video,
                   game_photo AS photo,
-                  game_type AS type,
+                  game_type_oz AS type_oz,
+                  game_type_uz AS type_uz,
+                  game_type_ru AS type_ru,
+                  game_type_en AS type_en,
                   game_status AS status,
                   region_id  
          FROM 
@@ -27,8 +39,14 @@ class Games extends PG {
       return this.fetchAll(`
          SELECT 
                   game_id AS id,
-                  game_name AS name,
-                  game_title AS title,
+                  game_name_oz AS name_oz,
+                  game_name_uz AS name_uz,
+                  game_name_ru AS name_ru,
+                  game_name_en AS name_en,
+                  game_title_oz AS title_oz,
+                  game_title_uz AS title_uz,
+                  game_title_ru AS title_ru,
+                  game_title_en AS title_en,
                   game_photo AS photo
          FROM 
                   games
@@ -43,9 +61,18 @@ class Games extends PG {
       return this.fetch(`
          SELECT
                   game_id AS id,
-                  game_name AS name,
-                  game_title AS title,
-                  game_info AS info,
+                  game_name_oz AS name_oz,
+                  game_name_uz AS name_uz,
+                  game_name_ru AS name_ru,
+                  game_name_en AS name_en,
+                  game_title_oz AS title_oz,
+                  game_title_uz AS title_uz,
+                  game_title_ru AS title_ru,
+                  game_title_en AS title_en,
+                  game_info_oz AS info_oz,
+                  game_info_uz AS info_uz,
+                  game_info_ru AS info_ru,
+                  game_info_en AS info_en,
                   game_video AS video,
                   game_photo AS photo  
          FROM
@@ -59,9 +86,18 @@ class Games extends PG {
       return this.fetchAll(`
          SELECT
                   game_id AS id,
-                  game_name AS name,
-                  game_title AS title,
-                  game_info AS info,
+                  game_name_oz AS name_oz,
+                  game_name_uz AS name_uz,
+                  game_name_ru AS name_ru,
+                  game_name_en AS name_en,
+                  game_title_oz AS title_oz,
+                  game_title_uz AS title_uz,
+                  game_title_ru AS title_ru,
+                  game_title_en AS title_en,
+                  game_info_oz AS info_oz,
+                  game_info_uz AS info_uz,
+                  game_info_ru AS info_ru,
+                  game_info_en AS info_en,
                   game_video AS video,
                   game_photo AS photo  
          FROM
@@ -75,18 +111,30 @@ class Games extends PG {
       return this.fetchAll(`
          SELECT 
                   game_id AS id,
-                  game_name AS name,
-                  game_title AS title,
-                  game_info AS info,
+                  game_name_oz AS name_oz,
+                  game_name_uz AS name_uz,
+                  game_name_ru AS name_ru,
+                  game_name_en AS name_en,
+                  game_title_oz AS title_oz,
+                  game_title_uz AS title_uz,
+                  game_title_ru AS title_ru,
+                  game_title_en AS title_en,
+                  game_info_oz AS info_oz,
+                  game_info_uz AS info_uz,
+                  game_info_ru AS info_ru,
+                  game_info_en AS info_en,
                   game_video AS video,
                   game_photo AS photo,
-                  game_type AS type,
+                  game_type_oz AS type_oz,
+                  game_type_uz AS type_uz,
+                  game_type_ru AS type_ru,
+                  game_type_en AS type_en,
                   game_status AS status,
                   region_id   
          FROM 
                   games
          WHERE
-                  game_is_delete = false AND (game_name ->> 'oz' ILIKE $1 OR game_name ->> 'uz' ILIKE $1 OR game_name ->> 'ru' ILIKE $1 OR game_name ->> 'en' ILIKE $1 OR game_info ->> 'oz' ILIKE $1 OR game_info ->> 'uz' ILIKE $1 OR game_info ->> 'ru' ILIKE $1 OR game_info ->> 'en' ILIKE $1)
+                  game_is_delete = false AND (game_name_oz ILIKE $1 OR game_name_uz ILIKE $1 OR game_name_ru ILIKE $1 OR game_name_en ILIKE $1 OR game_info_oz ILIKE $1 OR game_info_uz ILIKE $1 OR game_info_ru ILIKE $1 OR game_info_en ILIKE $1)
          ORDER BY
                   game_id  DESC
          OFFSET $2 LIMIT $3
@@ -111,7 +159,7 @@ class Games extends PG {
          FROM
                games
          WHERE 
-               game_is_delete = false AND (game_name ->> 'oz' ILIKE $1 OR game_name ->> 'uz' ILIKE $1 OR game_name ->> 'ru' ILIKE $1 OR game_name ->> 'en' ILIKE $1 OR game_info ->> 'oz' ILIKE $1 OR game_info ->> 'uz' ILIKE $1 OR game_info ->> 'ru' ILIKE $1 OR game_info ->> 'en' ILIKE $1)
+               game_is_delete = false AND (game_name_oz ILIKE $1 OR game_name_uz ILIKE $1 OR game_name_ru ILIKE $1 OR game_name_en ILIKE $1 OR game_info_oz ILIKE $1 OR game_info_uz ILIKE $1 OR game_info_ru ILIKE $1 OR game_info_en ILIKE $1)
       `, search_data)
    }
 
@@ -119,12 +167,24 @@ class Games extends PG {
       return this.fetch(`
          SELECT
                   game_id AS id,
-                  game_name AS name,
-                  game_title AS title,
-                  game_info AS info,
+                  game_name_oz AS name_oz,
+                  game_name_uz AS name_uz,
+                  game_name_ru AS name_ru,
+                  game_name_en AS name_en,
+                  game_title_oz AS title_oz,
+                  game_title_uz AS title_uz,
+                  game_title_ru AS title_ru,
+                  game_title_en AS title_en,
+                  game_info_oz AS info_oz,
+                  game_info_uz AS info_uz,
+                  game_info_ru AS info_ru,
+                  game_info_en AS info_en,
                   game_video AS video,
                   game_photo AS photo,
-                  game_type AS type,
+                  game_type_oz AS type_oz,
+                  game_type_uz AS type_uz,
+                  game_type_ru AS type_ru,
+                  game_type_en AS type_en,
                   game_status AS status,
                   region_id  
          FROM
@@ -148,18 +208,30 @@ class Games extends PG {
       `, game_id)
    }
 
-   ADD_GAME (name, title, info, video, video_name, photo, photo_name, type, status, region_id) {
+   ADD_GAME (name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id) {
       return this.fetch(`
          INSERT INTO
                      games (
-                        game_name,
-                        game_title,
-                        game_info,
+                        game_name_oz,
+                        game_name_uz,
+                        game_name_ru,
+                        game_name_en,
+                        game_title_oz,
+                        game_title_uz,
+                        game_title_ru,
+                        game_title_en,
+                        game_info_oz,
+                        game_info_uz,
+                        game_info_ru,
+                        game_info_en,
                         game_video,
                         game_video_name,
                         game_photo,
                         game_photo_name,
-                        game_type,
+                        game_type_oz,
+                        game_type_uz,
+                        game_type_ru,
+                        game_type_en,
                         game_status,
                         region_id
                      )
@@ -173,29 +245,53 @@ class Games extends PG {
                         $7,
                         $8,
                         $9, 
-                        $10
+                        $10,
+                        $11,
+                        $12, 
+                        $13,
+                        $14,
+                        $15,
+                        $16,
+                        $17,
+                        $18,
+                        $19,
+                        $20,
+                        $21,
+                        $22
                   )          
-      RETURNING *`, name, title, info, video, video_name, photo, photo_name, type, status, region_id)
+      RETURNING *`, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id)
    }
 
-   UPDATE_GAME(id, name, title, info, video, video_name, photo, photo_name, type, status, region_id) {
+   UPDATE_GAME(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id) {
       return this.fetch(`
             UPDATE
                      games
             SET
-                     game_name = $2,
-                     game_title = $3,
-                     game_info = $4,
-                     game_video = $5,
-                     game_video_name = $6,
-                     game_photo = $7,
-                     game_photo_name = $8,
-                     game_type = $9,
-                     game_status = $10,
-                     region_id = $11
+                     game_name_oz = $2,
+                     game_name_uz = $3,
+                     game_name_ru = $4,
+                     game_name_en = $5,
+                     game_title_oz = $6,
+                     game_title_uz = $7,
+                     game_title_ru = $8,
+                     game_title_en = $9,
+                     game_info_oz = $10,
+                     game_info_uz = $11,
+                     game_info_ru = $12,
+                     game_info_en = $13,
+                     game_video = $14,
+                     game_video_name = $15,
+                     game_photo = $16,
+                     game_photo_name = $17,
+                     game_type_oz = $18,
+                     game_type_uz = $19,
+                     game_type_ru = $20,
+                     game_type_en = $21,
+                     game_status = $22,
+                     region_id = $23
             WHERE
                      game_id = $1
-      RETURNING *`, id, name, title, info, video, video_name, photo, photo_name, type, status, region_id)
+      RETURNING *`, id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id)
    }
 
    EDIT_GAME(game_id, game_status) {

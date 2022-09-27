@@ -266,15 +266,15 @@ module.exports = {
          const uploadMedia = req.files;
          const { name, short_info, shrine_count, status } = req.body
 
-         const name_oz = name.oz
-         const name_uz = name.uz
-         const name_ru = name.ru
-         const name_en = name.en
+         const name_oz = name?.oz
+         const name_uz = name?.uz
+         const name_ru = name?.ru
+         const name_en = name?.en
 
-         const short_info_oz = short_info.oz
-         const short_info_uz = short_info.uz
-         const short_info_ru = short_info.ru
-         const short_info_en = short_info.en
+         const short_info_oz = short_info?.oz
+         const short_info_uz = short_info?.uz
+         const short_info_ru = short_info?.ru
+         const short_info_en = short_info?.en
 
          const reg_photo = [];
          const reg_photo_name = [];

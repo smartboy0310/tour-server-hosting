@@ -5,9 +5,18 @@ class Leader extends PG {
       return this.fetchAll(`      
          SELECT
                   leader_id AS id,
-                  leader_name AS name,
-                  leader_role AS role,
-                  leader_info AS info,
+                  leader_name_oz AS name_oz,
+                  leader_name_uz AS name_uz,
+                  leader_name_ru AS name_ru,
+                  leader_name_en AS name_en,
+                  leader_role_oz AS role_oz,
+                  leader_role_uz AS role_uz,
+                  leader_role_ru AS role_ru,
+                  leader_role_en AS role_en,
+                  leader_info_oz AS info_oz,
+                  leader_info_uz AS info_uz,
+                  leader_info_ru AS info_ru,
+                  leader_info_en AS info_en,
                   leader_phone AS phone,
                   leader_email AS email,
                   leader_photo AS photo,
@@ -23,9 +32,18 @@ class Leader extends PG {
       return this.fetch(`
          SELECT
                   leader_id AS id,
-                  leader_name AS name,
-                  leader_role AS role,
-                  leader_info AS info,
+                  leader_name_oz AS name_oz,
+                  leader_name_uz AS name_uz,
+                  leader_name_ru AS name_ru,
+                  leader_name_en AS name_en,
+                  leader_role_oz AS role_oz,
+                  leader_role_uz AS role_uz,
+                  leader_role_ru AS role_ru,
+                  leader_role_en AS role_en,
+                  leader_info_oz AS info_oz,
+                  leader_info_uz AS info_uz,
+                  leader_info_ru AS info_ru,
+                  leader_info_en AS info_en,
                   leader_phone AS phone,
                   leader_email AS email,
                   leader_photo AS photo,
@@ -37,6 +55,32 @@ class Leader extends PG {
       `, leader_id)
    }
 
+   ACTIVE_LEADER() {
+      return this.fetchAll(`      
+         SELECT
+                  leader_id AS id,
+                  leader_name_oz AS name_oz,
+                  leader_name_uz AS name_uz,
+                  leader_name_ru AS name_ru,
+                  leader_name_en AS name_en,
+                  leader_role_oz AS role_oz,
+                  leader_role_uz AS role_uz,
+                  leader_role_ru AS role_ru,
+                  leader_role_en AS role_en,
+                  leader_info_oz AS info_oz,
+                  leader_info_uz AS info_uz,
+                  leader_info_ru AS info_ru,
+                  leader_info_en AS info_en,
+                  leader_phone AS phone,
+                  leader_email AS email,
+                  leader_photo AS photo
+         FROM
+                  leader
+         WHERE
+                  leader_is_delete = false AND leader_status = true
+      `)
+   }
+   
    SELECTED_LEADER(leader_id) {
       return this.fetch(`
          SELECT
@@ -49,13 +93,22 @@ class Leader extends PG {
       `, leader_id)
    }
 
-   ADD_LEADER(name, role, info, phone, email, photo, photo_name, status) {
+   ADD_LEADER(name_oz, name_uz, name_ru, name_en, role_oz, role_uz, role_ru, role_en, info_oz, info_uz, info_ru, info_en, phone, email, photo, photo_name, status) {
       return this.fetch(`
          INSERT INTO
                         leader (
-                           leader_name,
-                           leader_role,
-                           leader_info,
+                           leader_name_oz,
+                           leader_name_uz,
+                           leader_name_ru,
+                           leader_name_en,
+                           leader_role_oz,
+                           leader_role_uz,
+                           leader_role_ru,
+                           leader_role_en,
+                           leader_info_oz,
+                           leader_info_uz,
+                           leader_info_ru,
+                           leader_info_en,
                            leader_phone,
                            leader_email,
                            leader_photo,
@@ -70,27 +123,45 @@ class Leader extends PG {
                            $5,
                            $6,
                            $7,
-                           $8
+                           $8,
+                           $9,
+                           $10,
+                           $11,
+                           $12,
+                           $13,
+                           $14,
+                           $15,
+                           $16,
+                           $17
                         )
-      RETURNING *`, name, role, info, phone, email, photo, photo_name, status)
+      RETURNING *`, name_oz, name_uz, name_ru, name_en, role_oz, role_uz, role_ru, role_en, info_oz, info_uz, info_ru, info_en, phone, email, photo, photo_name, status)
    }
 
-   UPDATE_LEADER(id, name, role, info, phone, email, photo, photo_name, status) {
+   UPDATE_LEADER(id, name_oz, name_uz, name_ru, name_en, role_oz, role_uz, role_ru, role_en, info_oz, info_uz, info_ru, info_en, phone, email, photo, photo_name, status) {
       return this.fetch(`
          UPDATE
                   leader
          SET
-                  leader_name = $2,
-                  leader_role = $3,
-                  leader_info = $4,
-                  leader_phone = $5,
-                  leader_email = $6,
-                  leader_photo = $7,
-                  leader_photo_name = $8,                  
-                  leader_status = $9
+                  leader_name_oz = $2,
+                  leader_name_uz = $3,
+                  leader_name_ru = $4,
+                  leader_name_en = $5,
+                  leader_role_oz = $6,
+                  leader_role_uz = $7,
+                  leader_role_ru = $8,
+                  leader_role_en = $9,
+                  leader_info_oz = $10,
+                  leader_info_uz = $11,
+                  leader_info_ru = $12,
+                  leader_info_en = $13,                 
+                  leader_phone = $14,
+                  leader_email = $15,
+                  leader_photo = $16,
+                  leader_photo_name = $17,                  
+                  leader_status = $18
          WHERE
                   leader_id = $1
-      RETURNING *`, id, name, role, info, phone, email, photo, photo_name, status)
+      RETURNING *`, id, name_oz, name_uz, name_ru, name_en, role_oz, role_uz, role_ru, role_en, info_oz, info_uz, info_ru, info_en, phone, email, photo, photo_name, status)
    }
 
    EDIT_LEADER(id, status) {

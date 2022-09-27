@@ -11,19 +11,87 @@ module.exports = {
          const countFood = await model.COUNT_FOODS()
          const countFoodSearch = await model.COUNT_FOODS_SEARCH(`%${search_data}%`)
          if (search_data) {
+
+            const sendData = []
+            const name = {}
+            const title = {}
+            const info = {}
+           
+            const foundData = await model.SEARCH_FOODS(`%${search_data}%`, page, limit)
+
+            foundData?.forEach(e => {
+               name.oz = e.name_oz
+               name.uz = e.name_uz
+               name.ru = e.name_ru
+               name.en = e.name_en
+
+               title.oz = e.title_oz
+               title.uz = e.title_uz
+               title.ru = e.title_ru
+               title.en = e.title_en
+
+               info.oz = e.info_oz
+               info.uz = e.info_uz
+               info.ru = e.info_ru
+               info.en = e.info_en               
+
+               sendData.push({
+                  id: e.id,
+                  name: name,
+                  title: title,
+                  info: info,
+                  photo: e.photo,
+                  status: e.status                  
+               })
+            })
+
             res.json({
                status: 200,
                totalPages: Math.ceil(parseInt(countFoodSearch?.count)/limit),
                totalItems: parseInt(countFoodSearch?.count),
-               data: await model.SEARCH_FOODS(`%${search_data}%`, page, limit),
+               data: sendData,
             })
          }
          else {
+
+            const sendData = []
+            const name = {}
+            const title = {}
+            const info = {}
+           
+            const foundData = await model.ALL_FOODS(page, limit)
+
+            foundData?.forEach(e => {
+               name.oz = e.name_oz
+               name.uz = e.name_uz
+               name.ru = e.name_ru
+               name.en = e.name_en
+
+               title.oz = e.title_oz
+               title.uz = e.title_uz
+               title.ru = e.title_ru
+               title.en = e.title_en
+
+               info.oz = e.info_oz
+               info.uz = e.info_uz
+               info.ru = e.info_ru
+               info.en = e.info_en               
+
+               sendData.push({
+                  id: e.id,
+                  name: name,
+                  title: title,
+                  info: info,
+                  photo: e.photo,
+                  status: e.status                  
+               })
+            })
+
             res.json({
                status: 200,
                totalPages: Math.ceil(parseInt(countFood?.count)/limit),
                totalItems: parseInt(countFood?.count),
-               data: await model.ALL_FOODS(page, limit)
+               data: sendData
             })
          }
 
@@ -40,11 +108,39 @@ module.exports = {
       try {
          const { id } = req.params
 
+         const sendData = {}
+         const name = {}
+         const title = {}
+         const info = {}
+        
          const foundData = await model.SINGLE_FOOD(id)
+
+         name.oz = foundData?.name_oz
+         name.uz = foundData?.name_uz
+         name.ru = foundData?.name_ru
+         name.en = foundData?.name_en
+
+         title.oz = foundData?.title_oz
+         title.uz = foundData?.title_uz
+         title.ru = foundData?.title_ru
+         title.en = foundData?.title_en
+
+         info.oz = foundData?.info_oz
+         info.uz = foundData?.info_uz
+         info.ru = foundData?.info_ru
+         info.en = foundData?.info_en
+
+         sendData.id = foundData?.id
+         sendData.name = name
+         sendData.title = title
+         sendData.info = info
+         sendData.photo = foundData?.photo
+         sendData.status = foundData?.status
+         
          if (foundData) {
             res.json({
                status: 200,
-               data: foundData
+               data: sendData
             })
          }
          else {
@@ -67,11 +163,35 @@ module.exports = {
    GET_ACTIVE: async (_, res) => {
       try {
          
+         const sendData = []
+         const name = {}
+         const title = {}
+               
          const foundData = await model.ALL_ACTIVE_FOODS()
+
+         foundData?.forEach(e => {
+            name.oz = e.name_oz
+            name.uz = e.name_uz
+            name.ru = e.name_ru
+            name.en = e.name_en
+
+            title.oz = e.title_oz
+            title.uz = e.title_uz
+            title.ru = e.title_ru
+            title.en = e.title_en                      
+
+            sendData.push({
+               id: e.id,
+               name: name,
+               title: title,
+               photo: e.photo                                 
+            })
+         })
+         
          if (foundData) {
             res.json({
                status: 200,
-               data: foundData
+               data: sendData
             })
          }
          else {
@@ -95,11 +215,38 @@ module.exports = {
       try {
          const { id } = req.params
 
+         const sendData = {}
+         const name = {}
+         const title = {}
+         const info = {}
+        
          const foundData = await model.SINGLE_ACTIVE_FOOD(id)
+
+         name.oz = foundData?.name_oz
+         name.uz = foundData?.name_uz
+         name.ru = foundData?.name_ru
+         name.en = foundData?.name_en
+
+         title.oz = foundData?.title_oz
+         title.uz = foundData?.title_uz
+         title.ru = foundData?.title_ru
+         title.en = foundData?.title_en
+
+         info.oz = foundData?.info_oz
+         info.uz = foundData?.info_uz
+         info.ru = foundData?.info_ru
+         info.en = foundData?.info_en
+
+         sendData.id = foundData?.id
+         sendData.name = name
+         sendData.title = title
+         sendData.info = info
+         sendData.photo = foundData?.photo
+         
          if (foundData) {
             res.json({
                status: 200,
-               data: foundData
+               data: sendData
             })
          }
          else {
@@ -125,6 +272,21 @@ module.exports = {
          const uploadMedia = req.files
          const { name, title, info, status } = req.body
 
+         const name_oz = name.oz
+         const name_uz = name.uz
+         const name_ru = name.ru
+         const name_en = name.en
+
+         const title_oz = title.oz
+         const title_uz = title.uz
+         const title_ru = title.ru
+         const title_en = title.en
+
+         const info_oz = info.oz
+         const info_uz = info.uz
+         const info_ru = info.ru
+         const info_en = info.en
+
          const food_photo = []
          const food_photo_name = []
 
@@ -135,7 +297,7 @@ module.exports = {
 
 
 
-         const createdFood = await model.ADD_FOOD(name, title, info, food_photo, food_photo_name, status)
+         const createdFood = await model.ADD_FOOD(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, food_photo, food_photo_name, status)
 
          if (createdFood) {
             res.json({
@@ -166,6 +328,21 @@ module.exports = {
          const uploadMedia = req.files
          const { id, name, title, info, status } = req.body
 
+         const name_oz = name.oz
+         const name_uz = name.uz
+         const name_ru = name.ru
+         const name_en = name.en
+
+         const title_oz = title.oz
+         const title_uz = title.uz
+         const title_ru = title.ru
+         const title_en = title.en
+
+         const info_oz = info.oz
+         const info_uz = info.uz
+         const info_ru = info.ru
+         const info_en = info.en
+
          const food_photo = []
          const food_photo_name = []
 
@@ -191,7 +368,7 @@ module.exports = {
             })
          }
 
-         const updateFood = await model.UPDATE_FOOD(id, name, title, info, food_photo, food_photo_name, status)
+         const updateFood = await model.UPDATE_FOOD(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, food_photo, food_photo_name, status)
 
          if (updateFood) {
             res.json({

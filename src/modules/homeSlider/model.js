@@ -5,7 +5,10 @@ class HomeSlider extends PG {
       return this.fetchAll(`
          SELECT
                slide_id AS id, 
-               slide_title AS title,
+               slide_title_oz AS title_oz,
+               slide_title_uz AS title_uz,
+               slide_title_ru AS title_ru,
+               slide_title_en AS title_en,
                slide_photo AS photo,
                slide_status AS status
          FROM
@@ -18,7 +21,10 @@ class HomeSlider extends PG {
       return this.fetch(`
          SELECT
                slide_id AS id, 
-               slide_title AS title,
+               slide_title_oz AS title_oz,
+               slide_title_uz AS title_uz,
+               slide_title_ru AS title_ru,
+               slide_title_en AS title_en,
                slide_photo AS photo,
                slide_status AS status
          FROM
@@ -32,7 +38,10 @@ class HomeSlider extends PG {
       return this.fetchAll(`
          SELECT
                slide_id AS id, 
-               slide_title AS title,
+               slide_title_oz AS title_oz,
+               slide_title_uz AS title_uz,
+               slide_title_ru AS title_ru,
+               slide_title_en AS title_en,
                slide_photo AS photo
          FROM
                homeslider
@@ -53,11 +62,14 @@ class HomeSlider extends PG {
       `, slide_id)
    }
 
-   ADD_SLIDER( title, photo, photo_name, status) {
+   ADD_SLIDER( title_oz, title_uz, title_ru, title_en, photo, photo_name, status) {
       return this.fetch(`
          INSERT INTO 
                      homeslider(
-                        slide_title, 
+                        slide_title_oz,
+                        slide_title_uz,
+                        slide_title_ru,
+                        slide_title_en,
                         slide_photo, 
                         slide_photo_name, 
                         slide_status
@@ -66,23 +78,29 @@ class HomeSlider extends PG {
                         $1,
                         $2,
                         $3,
-                        $4
+                        $4,
+                        $5,
+                        $6,
+                        $7
                      )
-      RETURNING *`, title, photo, photo_name, status)
+      RETURNING *`, title_oz, title_uz, title_ru, title_en, photo, photo_name, status)
    }
 
-   UPDATE_SLIDER( id, title, photo, photo_name, status ) {
+   UPDATE_SLIDER( id, title_oz, title_uz, title_ru, title_en, photo, photo_name, status) {
       return this.fetch (`
          UPDATE
                   homeslider
          SET   
-                  slide_title = $2, 
-                  slide_photo = $3, 
-                  slide_photo_name = $4, 
-                  slide_status = $5
+                  slide_title_oz = $2,
+                  slide_title_uz = $3,
+                  slide_title_ru = $4,
+                  slide_title_en = $5, 
+                  slide_photo = $6, 
+                  slide_photo_name = $7, 
+                  slide_status = $8
          WHERE
                   slide_id = $1
-      RETURNING *`, id, title, photo, photo_name, status)
+      RETURNING *`, id, title_oz, title_uz, title_ru, title_en, photo, photo_name, status)
    }
 
    EDIT_SLIDER(slide_id, slide_status) {
