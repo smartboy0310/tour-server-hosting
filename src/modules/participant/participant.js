@@ -8,14 +8,16 @@ module.exports = {
       try {
 
          const { search_data, page, limit } = req.query;
+
+         const sendData = []
+         const name = {}
+         const role = {}
+         const info = {}
+
          const countParticipant = await model.COUNT_PARTICIPANT()
          const countParticipantSearch = await model.COUNT_PARTICIPANT_SEARCH(`%${search_data}%`)
+         
          if (search_data) {
-
-            const sendData = []
-            const name = {}
-            const role = {}
-            const info = {}
 
             const foundData = await model.SEARCH_PARTICIPANT(`%${search_data}%`, page, limit)
 
@@ -52,12 +54,7 @@ module.exports = {
                data: sendData
             })
          }
-         else {
-
-            const sendData = []
-            const name = {}
-            const role = {}
-            const info = {}
+         else {          
 
             const foundData = await model.ALL_PARTICIPANT(page, limit)
 

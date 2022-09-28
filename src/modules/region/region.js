@@ -8,13 +8,14 @@ module.exports = {
       try {
          const { search_data } = req.params
 
+         const sendData = []
+         const name = {}
+         const short_info = {}
+
          if (search_data) {
 
-            const sendData = []
-            const name = {}
-            const short_info = {}
             const foundData = await model.SEARCH_REGION(`%${search_data}%`)
-            
+
             foundData?.forEach(e => {
                name.oz = e.name_oz
                name.uz = e.name_uz
@@ -27,13 +28,13 @@ module.exports = {
                short_info.en = e.short_info_en
 
                sendData.push({
-                  id : e.id,
+                  id: e.id,
                   name: name,
-                  short_info : short_info,
-                  shrine_count : e.shrine_count,
-                  video : e.video,
-                  photo : e.photo,
-                  status : e.status
+                  short_info: short_info,
+                  shrine_count: e.shrine_count,
+                  video: e.video,
+                  photo: e.photo,
+                  status: e.status
                })
             })
             res.json({
@@ -43,11 +44,8 @@ module.exports = {
          }
          else {
 
-            const sendData = []
-            const name = {}
-            const short_info = {}
             const foundData = await model.ALL_REGION()
-            
+
             foundData?.forEach(e => {
                name.oz = e.name_oz
                name.uz = e.name_uz
@@ -60,13 +58,13 @@ module.exports = {
                short_info.en = e.short_info_en
 
                sendData.push({
-                  id : e.id,
+                  id: e.id,
                   name: name,
-                  short_info : short_info,
-                  shrine_count : e.shrine_count,
-                  video : e.video,
-                  photo : e.photo,
-                  status : e.status
+                  short_info: short_info,
+                  shrine_count: e.shrine_count,
+                  video: e.video,
+                  photo: e.photo,
+                  status: e.status
                })
             })
             res.json({
@@ -85,22 +83,22 @@ module.exports = {
 
    GET_REF: async (_, res) => {
       try {
-            const sendData = []
-            const name = {}
-            const refData = await model.REF_REGION()
+         const sendData = []
+         const name = {}
+         const refData = await model.REF_REGION()
 
-            refData?.forEach(e => {
+         refData?.forEach(e => {
 
-               name.oz = e.name_oz
-               name.uz = e.name_uz
-               name.ru = e.name_ru
-               name.en = e.name_en
+            name.oz = e.name_oz
+            name.uz = e.name_uz
+            name.ru = e.name_ru
+            name.en = e.name_en
 
-               sendData.push({
-                  id : e.id,
-                  name: name
-               })
-            })     
+            sendData.push({
+               id: e.id,
+               name: name
+            })
+         })
          res.json({
             status: 200,
             data: sendData
@@ -117,7 +115,7 @@ module.exports = {
 
    GET_SINGLE: async (req, res) => {
       try {
-         
+
          const { id } = req.params
          const sendData = {}
          const name = {}
@@ -138,9 +136,9 @@ module.exports = {
          sendData.name = name
          sendData.short_info = foundData?.short_info
          sendData.shrine_count = foundData?.shrine_count
-         sendData.video =  foundData?.video
-         sendData.photo =  foundData?.photo
-         sendData.status =  foundData?.status
+         sendData.video = foundData?.video
+         sendData.photo = foundData?.photo
+         sendData.status = foundData?.status
 
          if (foundData) {
             res.json({
@@ -169,32 +167,32 @@ module.exports = {
       try {
 
          const sendData = []
-            const name = {}
-            const short_info = {}
-            const foundData = await model.ALL_ACTIVE_REGION()
-            
-            foundData?.forEach(e => {
-               name.oz = e.name_oz
-               name.uz = e.name_uz
-               name.ru = e.name_ru
-               name.en = e.name_en
+         const name = {}
+         const short_info = {}
+         const foundData = await model.ALL_ACTIVE_REGION()
 
-               short_info.oz = e.short_info_oz
-               short_info.uz = e.short_info_uz
-               short_info.ru = e.short_info_ru
-               short_info.en = e.short_info_en
+         foundData?.forEach(e => {
+            name.oz = e.name_oz
+            name.uz = e.name_uz
+            name.ru = e.name_ru
+            name.en = e.name_en
 
-               sendData.push({
-                  id : e.id,
-                  name: name,
-                  short_info : short_info,
-                  shrine_count : e.shrine_count,
-                  video : e.video,
-                  photo : e.photo,
-                  status : e.status
-               })
+            short_info.oz = e.short_info_oz
+            short_info.uz = e.short_info_uz
+            short_info.ru = e.short_info_ru
+            short_info.en = e.short_info_en
+
+            sendData.push({
+               id: e.id,
+               name: name,
+               short_info: short_info,
+               shrine_count: e.shrine_count,
+               video: e.video,
+               photo: e.photo,
+               status: e.status
             })
-         
+         })
+
          res.json({
             status: 200,
             data: sendData
@@ -232,9 +230,9 @@ module.exports = {
          sendData.name = name
          sendData.short_info = foundData?.short_info
          sendData.shrine_count = foundData?.shrine_count
-         sendData.video =  foundData?.video
-         sendData.photo =  foundData?.photo
-         sendData.status =  foundData?.status
+         sendData.video = foundData?.video
+         sendData.photo = foundData?.photo
+         sendData.status = foundData?.status
 
          if (foundData) {
             res.json({

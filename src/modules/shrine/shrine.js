@@ -7,20 +7,21 @@ module.exports = {
    GET: async (req, res) => {
       try {
          const { search_data, page, limit } = req.query;
+         
+         const sendData = []
+         const name = {}
+         const title = {}
+         const info = {}
+         const add_title = {}
+         const add_info = {}
+         const address = {}
+         const location = {}
+         const type = {}
+
          const countShrine = await model.COUNT_SHRINE()
          const countShrineSearch = await model.COUNT_SHRINE_SEARCH(`%${search_data}%`)
 
          if (search_data) {
-
-            const sendData = []
-            const name = {}
-            const title = {}
-            const info = {}
-            const add_title = {}
-            const add_info = {}
-            const address = {}
-            const location = {}
-            const type = {}
 
             const foundData = await model.SEARCH_SHRINE(`%${search_data}%`, page, limit)
 
@@ -91,17 +92,7 @@ module.exports = {
             })
          }
          else {
-
-            const sendData = []
-            const name = {}
-            const title = {}
-            const info = {}
-            const add_title = {}
-            const add_info = {}
-            const address = {}
-            const location = {}
-            const type = {}
-
+            
             const foundData = await model.ALL_SHRINE(page, limit)
 
             foundData?.forEach(e => {
@@ -229,7 +220,6 @@ module.exports = {
          const type = {}
 
          const foundData = await model.SINGLE_SHRINE(id)
-
 
          name.oz = foundData?.name_oz
          name.uz = foundData?.name_uz

@@ -4,20 +4,36 @@ class Restuarants extends PG {
    ALL_RESTAURANTS(page, limit) {
       return this.fetchAll(`
       SELECT   
-               object_id AS id,
-               object_name AS name,
-               object_title AS title,
-               object_info AS info,
-               object_address AS address,
-               object_location AS location,
-               object_phone AS phone,
-               object_work_time AS work_time,
-               object_link AS link,
-               object_photo AS photo,
-               object_type AS type,
-               object_status AS status,
-               region_id,
-               shrine_id
+                  object_id AS id,
+                  object_name_oz AS name_oz,
+                  object_name_uz AS name_uz,
+                  object_name_ru AS name_ru,
+                  object_name_en AS name_en,
+                  object_title_oz AS title_oz,
+                  object_title_uz AS title_uz,
+                  object_title_ru AS title_ru,
+                  object_title_en AS title_en,
+                  object_info_oz AS info_oz,
+                  object_info_uz AS info_uz,
+                  object_info_ru AS info_ru,
+                  object_info_en AS info_en,
+                  object_address_oz AS address_oz,
+                  object_address_uz AS address_uz,
+                  object_address_ru AS address_ru,
+                  object_address_en AS address_en,
+                  object_location_x AS location_x,
+                  object_location_y AS location_y,
+                  object_phone AS phone,
+                  object_work_time AS work_time,
+                  object_link AS link,
+                  object_photo AS photo,
+                  object_type_oz AS type_oz,
+                  object_type_uz AS type_uz,
+                  object_type_ru AS type_ru,
+                  object_type_en AS type_en,
+                  object_status AS status,
+                  region_id,
+                  shrine_id
       FROM
             special_object
       WHERE 
@@ -32,8 +48,14 @@ class Restuarants extends PG {
       return this.fetchAll(`
       SELECT   
                object_id AS id,
-               object_name AS name,
-               object_title AS title,
+               object_name_oz AS name_oz,
+               object_name_uz AS name_uz,
+               object_name_ru AS name_ru,
+               object_name_en AS name_en,
+               object_title_oz AS title_oz,
+               object_title_uz AS title_uz,
+               object_title_ru AS title_ru,
+               object_title_en AS title_en,
                object_photo AS photo
       FROM
             special_object
@@ -45,11 +67,17 @@ class Restuarants extends PG {
    }
 
    RESTAURANTS_BY_SHRINE(shrine_id) {
-      return this.fetchAll(`
+      return this.fetch(`
       SELECT   
                object_id AS id,
-               object_name AS name,
-               object_title AS title,
+               object_name_oz AS name_oz,
+               object_name_uz AS name_uz,
+               object_name_ru AS name_ru,
+               object_name_en AS name_en,
+               object_title_oz AS title_oz,
+               object_title_uz AS title_uz,
+               object_title_ru AS title_ru,
+               object_title_en AS title_en,
                object_photo AS photo
       FROM
             special_object
@@ -64,11 +92,24 @@ class Restuarants extends PG {
       return this.fetch(`
          SELECT   
                   object_id AS id,
-                  object_name AS name,
-                  object_title AS title,
-                  object_info AS info,
-                  object_address AS address,
-                  object_location AS location,
+                  object_name_oz AS name_oz,
+                  object_name_uz AS name_uz,
+                  object_name_ru AS name_ru,
+                  object_name_en AS name_en,
+                  object_title_oz AS title_oz,
+                  object_title_uz AS title_uz,
+                  object_title_ru AS title_ru,
+                  object_title_en AS title_en,
+                  object_info_oz AS info_oz,
+                  object_info_uz AS info_uz,
+                  object_info_ru AS info_ru,
+                  object_info_en AS info_en,
+                  object_address_oz AS address_oz,
+                  object_address_uz AS address_uz,
+                  object_address_ru AS address_ru,
+                  object_address_en AS address_en,
+                  object_location_x AS location_x,
+                  object_location_y AS location_y,
                   object_phone AS phone,
                   object_work_time AS work_time,
                   object_link AS link,
@@ -83,24 +124,40 @@ class Restuarants extends PG {
    SEARCH_RESTAURANTS(search_data, page, limit) {
       return this.fetchAll(`
       SELECT   
-               object_id AS id,
-               object_name AS name,
-               object_title AS title,
-               object_info AS info,
-               object_address AS address,
-               object_location AS location,
-               object_phone AS phone,
-               object_work_time AS work_time,
-               object_link AS link,
-               object_photo AS photo,
-               object_type AS type,
-               object_status AS status,
-               region_id,
-               shrine_id
+                  object_id AS id,
+                  object_name_oz AS name_oz,
+                  object_name_uz AS name_uz,
+                  object_name_ru AS name_ru,
+                  object_name_en AS name_en,
+                  object_title_oz AS title_oz,
+                  object_title_uz AS title_uz,
+                  object_title_ru AS title_ru,
+                  object_title_en AS title_en,
+                  object_info_oz AS info_oz,
+                  object_info_uz AS info_uz,
+                  object_info_ru AS info_ru,
+                  object_info_en AS info_en,
+                  object_address_oz AS address_oz,
+                  object_address_uz AS address_uz,
+                  object_address_ru AS address_ru,
+                  object_address_en AS address_en,
+                  object_location_x AS location_x,
+                  object_location_y AS location_y,
+                  object_phone AS phone,
+                  object_work_time AS work_time,
+                  object_link AS link,
+                  object_photo AS photo,
+                  object_type_oz AS type_oz,
+                  object_type_uz AS type_uz,
+                  object_type_ru AS type_ru,
+                  object_type_en AS type_en,
+                  object_status AS status,
+                  region_id,
+                  shrine_id
       FROM
             special_object
       WHERE 
-               object_is_delete = false AND object_add_type = 'restaurant' AND (object_name ->> 'oz' ILIKE $2 OR object_name ->> 'uz' ILIKE $2 OR object_name ->> 'ru' ILIKE $2 OR object_name ->> 'en' ILIKE $2 OR object_info ->> 'oz' ILIKE $2 OR object_info ->> 'uz' ILIKE $2 OR object_info ->> 'ru' ILIKE $2 OR object_info ->> 'en' ILIKE $2)
+               object_is_delete = false AND object_add_type = 'restaurant' AND (object_name_oz ILIKE $1 OR object_name_uz ILIKE $1 OR object_name_ru ILIKE $1 OR object_name_en ILIKE $1 OR object_info_oz ILIKE $1 OR object_info_uz ILIKE $1 OR object_info_ru ILIKE $1 OR object_info_en ILIKE $1)
       ORDER BY
                object_id DESC
      OFFSET $2 LIMIT $3  
@@ -114,7 +171,7 @@ class Restuarants extends PG {
       FROM
             special_object
       WHERE 
-            object_is_delete = false AND object_add_type = 'restaurant' AND (object_name ->> 'oz' ILIKE $1 OR object_name ->> 'uz' ILIKE $1 OR object_name ->> 'ru' ILIKE $1 OR object_name ->> 'en' ILIKE $1 OR object_info ->> 'oz' ILIKE $1 OR object_info ->> 'uz' ILIKE $1 OR object_info ->> 'ru' ILIKE $1 OR object_info ->> 'en' ILIKE $1)
+            object_is_delete = false AND object_add_type = 'restaurant' AND (object_name_oz ILIKE $1 OR object_name_uz ILIKE $1 OR object_name_ru ILIKE $1 OR object_name_en ILIKE $1 OR object_info_oz ILIKE $1 OR object_info_uz ILIKE $1 OR object_info_ru ILIKE $1 OR object_info_en ILIKE $1)
    `, search_data)
    }
 
@@ -133,16 +190,32 @@ class Restuarants extends PG {
       return this.fetch(`
          SELECT   
                   object_id AS id,
-                  object_name AS name,
-                  object_title AS title,
-                  object_info AS info,
-                  object_address AS address,
-                  object_location AS location,
+                  object_name_oz AS name_oz,
+                  object_name_uz AS name_uz,
+                  object_name_ru AS name_ru,
+                  object_name_en AS name_en,
+                  object_title_oz AS title_oz,
+                  object_title_uz AS title_uz,
+                  object_title_ru AS title_ru,
+                  object_title_en AS title_en,
+                  object_info_oz AS info_oz,
+                  object_info_uz AS info_uz,
+                  object_info_ru AS info_ru,
+                  object_info_en AS info_en,
+                  object_address_oz AS address_oz,
+                  object_address_uz AS address_uz,
+                  object_address_ru AS address_ru,
+                  object_address_en AS address_en,
+                  object_location_x AS location_x,
+                  object_location_y AS location_y,
                   object_phone AS phone,
                   object_work_time AS work_time,
                   object_link AS link,
                   object_photo AS photo,
-                  object_type AS type,
+                  object_type_oz AS type_oz,
+                  object_type_uz AS type_uz,
+                  object_type_ru AS type_ru,
+                  object_type_en AS type_en,
                   object_status AS status,
                   region_id,
                   shrine_id
@@ -165,22 +238,38 @@ class Restuarants extends PG {
       `, object_id)
    }
 
-   ADD_RESTAURANT(object_name, object_title, object_info, object_address, object_location, object_phone, object_work_time, object_link, object_photo, object_photo_name, object_type, object_status, region_id, shrine_id) {
+   ADD_RESTAURANT(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, work_time, link, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id, shrine_id){
       return this.fetch(`
          INSERT INTO
                      special_object ( 
-                           object_name, 
-                           object_title, 
-                           object_info, 
-                           object_address, 
-                           object_location, 
-                           object_phone, 
-                           object_work_time,  
-                           object_link, 
-                           object_photo, 
-                           object_photo_name, 
-                           object_type, 
-                           object_add_type, 
+                           object_name_oz,
+                           object_name_uz,
+                           object_name_ru,
+                           object_name_en,
+                           object_title_oz,
+                           object_title_uz,
+                           object_title_ru,
+                           object_title_en,
+                           object_info_oz,
+                           object_info_uz,
+                           object_info_ru,
+                           object_info_en,
+                           object_address_oz,
+                           object_address_uz,
+                           object_address_ru,
+                           object_address_en,
+                           object_location_x,
+                           object_location_y,
+                           object_phone,
+                           object_work_time,
+                           object_link,
+                           object_photo,
+                           object_photo_name,
+                           object_type_oz,
+                           object_type_uz,
+                           object_type_ru,
+                           object_type_en,
+                           object_add_type,
                            object_status, 
                            region_id, 
                            shrine_id
@@ -197,37 +286,69 @@ class Restuarants extends PG {
                            $9,
                            $10,
                            $11,
-                           'restaurant',
                            $12,
                            $13,
-                           $14
+                           $14,
+                           $15,
+                           $16,
+                           $17,
+                           $18,
+                           $19,
+                           $20,
+                           $21,
+                           $22,
+                           $23,
+                           $24,
+                           $25,
+                           $26,
+                           $27,
+                           'restaurant',
+                           $28,
+                           $29,
+                           $30
                         )
-         RETURNING *`, object_name, object_title, object_info, object_address, object_location, object_phone, object_work_time, object_link, object_photo, object_photo_name, object_type, object_status, region_id, shrine_id)
+         RETURNING *`, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, work_time, link, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id, shrine_id)
    }
 
-   UPDATE_RESTAURANT(object_id, object_name, object_title, object_info, object_address, object_location, object_phone, object_work_time, object_link, object_photo, object_photo_name, object_type, object_status, region_id, shrine_id) {
+   UPDATE_RESTAURANT(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, work_time, link, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id, shrine_id){
       return this.fetch(`
          UPDATE
                   special_object 
          SET
-                     object_name = $2, 
-                     object_title = $3, 
-                     object_info = $4, 
-                     object_address = $5, 
-                     object_location = $6, 
-                     object_phone = $7, 
-                     object_work_time = $8, 
-                     object_link = $9, 
-                     object_photo = $10, 
-                     object_photo_name = $11, 
-                     object_type = $12, 
-                     object_status = $13, 
-                     region_id = $14, 
-                     shrine_id = $15
+                     object_name_oz = $2,
+                     object_name_uz = $3,
+                     object_name_ru = $4,
+                     object_name_en = $5,
+                     object_title_oz = $6,
+                     object_title_uz = $7,
+                     object_title_ru = $8,
+                     object_title_en = $9,
+                     object_info_oz = $10,
+                     object_info_uz = $11,
+                     object_info_ru = $12,
+                     object_info_en = $13,
+                     object_address_oz = $14,
+                     object_address_uz = $15,
+                     object_address_ru = $16,
+                     object_address_en = $17,
+                     object_location_x = $18,
+                     object_location_y = $19,
+                     object_phone = $20,
+                     object_work_time = $21,
+                     object_link = $22,
+                     object_photo = $23,
+                     object_photo_name = $24,
+                     object_type_oz = $25,
+                     object_type_uz = $26,
+                     object_type_ru = $27,
+                     object_type_en = $28, 
+                     object_status = $29, 
+                     region_id = $30, 
+                     shrine_id = $31
          WHERE 
                      object_id = $1      
                            
-         RETURNING *`, object_id, object_name, object_title, object_info, object_address, object_location, object_phone, object_work_time, object_link, object_photo, object_photo_name, object_type, object_status, region_id, shrine_id)
+         RETURNING *`, id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, work_time, link, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id, shrine_id)
    }
 
    EDIT_RESTAURANT(object_id, object_status) {
