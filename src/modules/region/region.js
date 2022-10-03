@@ -262,7 +262,9 @@ module.exports = {
       try {
 
          const uploadMedia = req.files;
-         const { name, short_info, shrine_count, status } = req.body
+         const { name: names, short_info: info, shrine_count, status } = req.body
+         const name = JSON.parse(names)
+         const short_info = JSON.parse(info)
 
          const name_oz = name?.oz
          const name_uz = name?.uz
@@ -313,7 +315,10 @@ module.exports = {
       try {
 
          const uploadMedia = req.files
-         const { id, name, short_info, shrine_count, status } = req.body
+         const { id, name: names, short_info: info, shrine_count, status } = req.body
+
+         const name = JSON.parse(names)
+         const short_info = JSON.parse(info)
 
          const name_oz = name.oz
          const name_uz = name.uz

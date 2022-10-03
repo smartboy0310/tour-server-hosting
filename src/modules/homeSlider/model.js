@@ -30,7 +30,7 @@ class HomeSlider extends PG {
          FROM
                homeslider
          WHERE
-               slide_id = $1 and slide_is_delete = false
+               slide_id = $1 AND slide_is_delete = false
       `, slide_id)
    }
 

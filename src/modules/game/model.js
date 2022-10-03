@@ -19,10 +19,7 @@ class Games extends PG {
                   game_info_en AS info_en,
                   game_video AS video,
                   game_photo AS photo,
-                  game_type_oz AS type_oz,
-                  game_type_uz AS type_uz,
-                  game_type_ru AS type_ru,
-                  game_type_en AS type_en,
+                  game_type AS type,            
                   game_status AS status,
                   region_id  
          FROM 
@@ -125,16 +122,13 @@ class Games extends PG {
                   game_info_en AS info_en,
                   game_video AS video,
                   game_photo AS photo,
-                  game_type_oz AS type_oz,
-                  game_type_uz AS type_uz,
-                  game_type_ru AS type_ru,
-                  game_type_en AS type_en,
+                  game_type AS type,                 
                   game_status AS status,
                   region_id   
          FROM 
                   games
          WHERE
-                  game_is_delete = false AND (game_name_oz ILIKE $1 OR game_name_uz ILIKE $1 OR game_name_ru ILIKE $1 OR game_name_en ILIKE $1 OR game_info_oz ILIKE $1 OR game_info_uz ILIKE $1 OR game_info_ru ILIKE $1 OR game_info_en ILIKE $1)
+                  game_is_delete = false AND (game_name_oz ILIKE $1 OR game_name_uz ILIKE $1 OR game_name_ru ILIKE $1 OR game_name_en ILIKE $1 OR game_info_oz ILIKE $1 OR game_info_uz ILIKE $1 OR game_info_ru ILIKE $1 OR game_info_en ILIKE $1 OR game_title_oz ILIKE $1 OR game_title_uz ILIKE $1 OR game_title_ru ILIKE $1 OR game_title_en ILIKE $1)
          ORDER BY
                   game_id  DESC
          OFFSET $2 LIMIT $3
@@ -159,7 +153,7 @@ class Games extends PG {
          FROM
                games
          WHERE 
-               game_is_delete = false AND (game_name_oz ILIKE $1 OR game_name_uz ILIKE $1 OR game_name_ru ILIKE $1 OR game_name_en ILIKE $1 OR game_info_oz ILIKE $1 OR game_info_uz ILIKE $1 OR game_info_ru ILIKE $1 OR game_info_en ILIKE $1)
+               game_is_delete = false AND (game_name_oz ILIKE $1 OR game_name_uz ILIKE $1 OR game_name_ru ILIKE $1 OR game_name_en ILIKE $1 OR game_info_oz ILIKE $1 OR game_info_uz ILIKE $1 OR game_info_ru ILIKE $1 OR game_info_en ILIKE $1 OR game_title_oz ILIKE $1 OR game_title_uz ILIKE $1 OR game_title_ru ILIKE $1 OR game_title_en ILIKE $1)
       `, search_data)
    }
 
@@ -181,10 +175,7 @@ class Games extends PG {
                   game_info_en AS info_en,
                   game_video AS video,
                   game_photo AS photo,
-                  game_type_oz AS type_oz,
-                  game_type_uz AS type_uz,
-                  game_type_ru AS type_ru,
-                  game_type_en AS type_en,
+                  game_type AS type,
                   game_status AS status,
                   region_id  
          FROM
@@ -208,7 +199,7 @@ class Games extends PG {
       `, game_id)
    }
 
-   ADD_GAME (name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id) {
+   ADD_GAME (name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type, status, region_id) {
       return this.fetch(`
          INSERT INTO
                      games (
@@ -228,10 +219,7 @@ class Games extends PG {
                         game_video_name,
                         game_photo,
                         game_photo_name,
-                        game_type_oz,
-                        game_type_uz,
-                        game_type_ru,
-                        game_type_en,
+                        game_type,                        
                         game_status,
                         region_id
                      )
@@ -254,15 +242,12 @@ class Games extends PG {
                         $16,
                         $17,
                         $18,
-                        $19,
-                        $20,
-                        $21,
-                        $22
+                        $19
                   )          
-      RETURNING *`, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id)
+      RETURNING *`, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type, status, region_id)
    }
 
-   UPDATE_GAME(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id) {
+   UPDATE_GAME(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type, status, region_id) {
       return this.fetch(`
             UPDATE
                      games
@@ -283,15 +268,12 @@ class Games extends PG {
                      game_video_name = $15,
                      game_photo = $16,
                      game_photo_name = $17,
-                     game_type_oz = $18,
-                     game_type_uz = $19,
-                     game_type_ru = $20,
-                     game_type_en = $21,
-                     game_status = $22,
-                     region_id = $23
+                     game_type = $18,               
+                     game_status = $19,
+                     region_id = $20
             WHERE
                      game_id = $1
-      RETURNING *`, id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id)
+      RETURNING *`, id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type, status, region_id)
    }
 
    EDIT_GAME(game_id, game_status) {

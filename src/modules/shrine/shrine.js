@@ -14,10 +14,8 @@ module.exports = {
          const info = {}
          const add_title = {}
          const add_info = {}
-         const address = {}
-         const location = {}
-         const type = {}
-
+         const address = {}     
+       
          const countShrine = await model.COUNT_SHRINE()
          const countShrineSearch = await model.COUNT_SHRINE_SEARCH(`%${search_data}%`)
 
@@ -54,16 +52,8 @@ module.exports = {
                address.oz = e.address_oz
                address.uz = e.address_uz
                address.ru = e.address_ru
-               address.en = e.address_en
-
-               location.x = e.location_x
-               location.y = e.location_y
-
-               type.oz = e.type_oz
-               type.uz = e.type_uz
-               type.ru = e.type_ru
-               type.en = e.type_en
-
+               address.en = e.address_en              
+              
                sendData.push({
                   id: e.id,
                   name: name,
@@ -72,9 +62,9 @@ module.exports = {
                   add_title: add_title,
                   add_info: add_info,
                   address: address,
-                  location: location,
+                  location: e.location,
                   phone: e.phone,
-                  type: type,
+                  type: e.type,
                   top: e.top,
                   video: e.video,
                   audio: e.audio,
@@ -124,16 +114,8 @@ module.exports = {
                address.oz = e.address_oz
                address.uz = e.address_uz
                address.ru = e.address_ru
-               address.en = e.address_en
-
-               location.x = e.location_x
-               location.y = e.location_y
-
-               type.oz = e.type_oz
-               type.uz = e.type_uz
-               type.ru = e.type_ru
-               type.en = e.type_en
-
+               address.en = e.address_en             
+             
                sendData.push({
                   id: e.id,
                   name: name,
@@ -142,9 +124,9 @@ module.exports = {
                   add_title: add_title,
                   add_info: add_info,
                   address: address,
-                  location: location,
+                  location: e.location,
                   phone: e.phone,
-                  type: type,
+                  type: e.type,
                   top: e.top,
                   video: e.video,
                   audio: e.audio,
@@ -215,10 +197,8 @@ module.exports = {
          const info = {}
          const add_title = {}
          const add_info = {}
-         const address = {}
-         const location = {}
-         const type = {}
-
+         const address = {}        
+         
          const foundData = await model.SINGLE_SHRINE(id)
 
          name.oz = foundData?.name_oz
@@ -249,16 +229,8 @@ module.exports = {
          address.oz = foundData?.address_oz
          address.uz = foundData?.address_uz
          address.ru = foundData?.address_ru
-         address.en = foundData?.address_en
-
-         location.x = foundData?.location_x
-         location.y = foundData?.location_y
-
-         type.oz = foundData?.type_oz
-         type.uz = foundData?.type_uz
-         type.ru = foundData?.type_ru
-         type.en = foundData?.type_en
-
+         address.en = foundData?.address_en        
+        
          sendData.id = foundData?.id
          sendData.name = name
          sendData.title = title
@@ -266,9 +238,9 @@ module.exports = {
          sendData.add_title = add_title
          sendData.add_info = add_info
          sendData.address = address
-         sendData.location = location
+         sendData.location = foundData?.location
          sendData.phone = foundData?.phone
-         sendData.type = type
+         sendData.type = foundData?.type
          sendData.top = foundData?.top
          sendData.video = foundData?.video
          sendData.audio = foundData?.audio
@@ -309,10 +281,8 @@ module.exports = {
          const info = {}
          const add_title = {}
          const add_info = {}
-         const address = {}
-         const location = {}
-         const type = {}
-
+         const address = {}         
+         
          const foundData = await model.SHRINE_BY_REGION(reg_id)
 
          foundData?.forEach(e => {
@@ -346,14 +316,6 @@ module.exports = {
             address.ru = e.address_ru
             address.en = e.address_en
 
-            location.x = e.location_x
-            location.y = e.location_y
-
-            type.oz = e.type_oz
-            type.uz = e.type_uz
-            type.ru = e.type_ru
-            type.en = e.type_en
-
             sendData.push({
                id: e.id,
                name: name,
@@ -362,9 +324,9 @@ module.exports = {
                add_title: add_title,
                add_info: add_info,
                address: address,
-               location: location,
+               location: e.location,
                phone: e.phone,
-               type: type,
+               type: e.type,
                top: e.top,
                video: e.video,
                audio: e.audio,
@@ -458,12 +420,9 @@ module.exports = {
          const info = {}
          const add_title = {}
          const add_info = {}
-         const address = {}
-         const location = {}
-         const type = {}
-
+         const address = {}         
+         
          const foundData = await model.SINGLE_ACTIVE_SHRINE(id)
-
 
          name.oz = foundData?.name_oz
          name.uz = foundData?.name_uz
@@ -493,16 +452,8 @@ module.exports = {
          address.oz = foundData?.address_oz
          address.uz = foundData?.address_uz
          address.ru = foundData?.address_ru
-         address.en = foundData?.address_en
-
-         location.x = foundData?.location_x
-         location.y = foundData?.location_y
-
-         type.oz = foundData?.type_oz
-         type.uz = foundData?.type_uz
-         type.ru = foundData?.type_ru
-         type.en = foundData?.type_en
-
+         address.en = foundData?.address_en        
+       
          sendData.id = foundData?.id
          sendData.name = name
          sendData.title = title
@@ -510,9 +461,9 @@ module.exports = {
          sendData.add_title = add_title
          sendData.add_info = add_info
          sendData.address = address
-         sendData.location = location
+         sendData.location = foundData?.location
          sendData.phone = foundData?.phone
-         sendData.type = type
+         sendData.type = foundData?.type
          sendData.top = foundData?.top
          sendData.video = foundData?.video
          sendData.audio = foundData?.audio
@@ -547,8 +498,15 @@ module.exports = {
 
          const mediaUpload = req.files;
 
-         const { name, title, info, add_title, add_info, address, location, phone, type, top, status, region_id } = req.body;
+         const { name : names, title : titles, info : infos, add_title : add_titles, add_info:  add_infos, address : addresss, location, phone, type, top, status, region_id } = req.body;
 
+         const name = JSON.parse(names)
+         const title = JSON.parse(titles)
+         const info = JSON.parse(infos)
+         const add_title = JSON.parse(add_titles)
+         const add_info = JSON.parse(add_infos)
+         const address = JSON.parse(addresss)
+        
          const name_oz = name?.oz
          const name_uz = name?.uz
          const name_ru = name?.ru
@@ -577,15 +535,7 @@ module.exports = {
          const address_oz = address?.oz
          const address_uz = address?.uz
          const address_ru = address?.ru
-         const address_en = address?.en
-
-         const location_x = location?.x
-         const location_y = location?.y
-
-         const type_oz = type?.oz
-         const type_uz = type?.uz
-         const type_ru = type?.ru
-         const type_en = type?.en
+         const address_en = address?.en                
 
          const shrine_video = `${process.env.BACKEND_URL}/${mediaUpload?.video[0].filename}`
          const shrine_video_name = mediaUpload?.video[0].filename
@@ -616,7 +566,7 @@ module.exports = {
             shrine_photo_name.push(e.filename)
          })
 
-         const createShrine = await model.ADD_SHRINE(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, type_oz, type_uz, type_ru, type_en, top, shrine_video, shrine_video_name, shrine_audio, shrine_audio_name, shrine_photo, shrine_photo_name, status, region_id)
+         const createShrine = await model.ADD_SHRINE(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, shrine_video, shrine_video_name, shrine_audio, shrine_audio_name, shrine_photo, shrine_photo_name, status, region_id)
 
          if (createShrine) {
             res.json({
@@ -646,8 +596,15 @@ module.exports = {
 
          const mediaUpload = req.files;
 
-         const { id, name, title, info, add_title, add_info, address, location, phone, type, top, status, region_id } = req.body;
+         const { id, name : names, title : titles, info : infos, add_title : add_titles, add_info:  add_infos, address : addresss, location, phone, type, top, status, region_id } = req.body;
 
+         const name = JSON.parse(names)
+         const title = JSON.parse(titles)
+         const info = JSON.parse(infos)
+         const add_title = JSON.parse(add_titles)
+         const add_info = JSON.parse(add_infos)
+         const address = JSON.parse(addresss)
+         
          const name_oz = name?.oz
          const name_uz = name?.uz
          const name_ru = name?.ru
@@ -676,16 +633,8 @@ module.exports = {
          const address_oz = address?.oz
          const address_uz = address?.uz
          const address_ru = address?.ru
-         const address_en = address?.en
-
-         const location_x = location?.x
-         const location_y = location?.y
-
-         const type_oz = type?.oz
-         const type_uz = type?.uz
-         const type_ru = type?.ru
-         const type_en = type?.en
-
+         const address_en = address?.en        
+        
          let shrine_video = ''
          let shrine_video_name = ''
          let audio_oz = ''
@@ -772,7 +721,7 @@ module.exports = {
             en: audio_en_name
          }
 
-         const updateShrine = await model.UPDATE_SHRINE(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, type_oz, type_uz, type_ru, type_en, top, shrine_video, shrine_video_name, shrine_audio, shrine_audio_name, shrine_photo, shrine_photo_name, status, region_id)
+         const updateShrine = await model.UPDATE_SHRINE(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, shrine_video, shrine_video_name, shrine_audio, shrine_audio_name, shrine_photo, shrine_photo_name, status, region_id)
 
          if (updateShrine) {
             res.json({

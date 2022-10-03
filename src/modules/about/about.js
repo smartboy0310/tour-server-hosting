@@ -39,7 +39,10 @@ module.exports = {
    PUT: async (req, res) => {
       try {
 
-         const { about, target, status } = req.body;
+         const { about : abouts, target : targets, status } = req.body;
+
+         const about = JSON.parse(abouts)
+         const target = JSON.parse(targets)
 
          const about_oz = about.oz
          const about_uz = about.uz

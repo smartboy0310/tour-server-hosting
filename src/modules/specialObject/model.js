@@ -1,7 +1,7 @@
 const PG = require('../../lib/postgress/postgress')
 
-class Mosques extends PG {
-   ALL_MOSQUES(page, limit) {
+class SpecialObject extends PG {
+   ALL_OBJECT(page, limit, type) {
       return this.fetchAll(`
       SELECT   
                object_id AS id,
@@ -21,29 +21,26 @@ class Mosques extends PG {
                object_address_uz AS address_uz,
                object_address_ru AS address_ru,
                object_address_en AS address_en,
-               object_location_x AS location_x,
-               object_location_y AS location_y,
+               object_location AS location,
                object_phone AS phone,
+               object_work_time AS work_time,
                object_link AS link,
                object_photo AS photo,
-               object_type_oz AS type_oz,
-               object_type_uz AS type_uz,
-               object_type_ru AS type_ru,
-               object_type_en AS type_en,
+               object_type AS type,
                object_status AS status,
                region_id,
                shrine_id
       FROM
             special_object
       WHERE 
-               object_is_delete = false AND object_add_type = 'mosque'
+               object_is_delete = false AND object_type = $3
       ORDER BY
                object_id DESC
       OFFSET $1 LIMIT $2 
-   `, (page - 1) * limit, limit)
+   `, (page - 1) * limit, limit, type)
    }
 
-   MOSQUES_BY_REGION(reg_id) {
+   OBJECTS_BY_REGION(reg_id, type) {
       return this.fetchAll(`
       SELECT   
                object_id AS id,
@@ -59,13 +56,13 @@ class Mosques extends PG {
       FROM
             special_object
       WHERE 
-               object_is_delete = false AND object_add_type = 'mosque' AND  object_status = true AND region_id = $1
+               object_is_delete = false AND object_type = $2 AND object_status = true AND region_id = $1
       ORDER BY
                object_id DESC
-   `, reg_id)
+   `, reg_id, type)
    }
 
-   MOSQUES_BY_SHRINE(shrine_id) {
+   OBJECT_BY_SHRINE(shrine_id, type) {
       return this.fetch(`
       SELECT   
                object_id AS id,
@@ -81,45 +78,45 @@ class Mosques extends PG {
       FROM
             special_object
       WHERE 
-               object_is_delete = false AND object_add_type = 'mosque' AND  object_status = true AND shrine_id = $1
+               object_is_delete = false AND object_type = $2 AND object_status = true AND shrine_id = $1
       ORDER BY
                object_id DESC
-   `, shrine_id)
+   `, shrine_id, type)
    }
 
-   SINGLE_ACTIVE_MOSQUE(object_id) {
+   SINGLE_ACTIVE_OBJECT(object_id, type) {
       return this.fetch(`
          SELECT   
-               object_id AS id,
-               object_name_oz AS name_oz,
-               object_name_uz AS name_uz,
-               object_name_ru AS name_ru,
-               object_name_en AS name_en,
-               object_title_oz AS title_oz,
-               object_title_uz AS title_uz,
-               object_title_ru AS title_ru,
-               object_title_en AS title_en,
-               object_info_oz AS info_oz,
-               object_info_uz AS info_uz,
-               object_info_ru AS info_ru,
-               object_info_en AS info_en,
-               object_address_oz AS address_oz,
-               object_address_uz AS address_uz,
-               object_address_ru AS address_ru,
-               object_address_en AS address_en,
-               object_location_x AS location_x,
-               object_location_y AS location_y,
-               object_phone AS phone,
-               object_link AS link,
-               object_photo AS photo
+                  object_id AS id,
+                  object_name_oz AS name_oz,
+                  object_name_uz AS name_uz,
+                  object_name_ru AS name_ru,
+                  object_name_en AS name_en,
+                  object_title_oz AS title_oz,
+                  object_title_uz AS title_uz,
+                  object_title_ru AS title_ru,
+                  object_title_en AS title_en,
+                  object_info_oz AS info_oz,
+                  object_info_uz AS info_uz,
+                  object_info_ru AS info_ru,
+                  object_info_en AS info_en,
+                  object_address_oz AS address_oz,
+                  object_address_uz AS address_uz,
+                  object_address_ru AS address_ru,
+                  object_address_en AS address_en,
+                  object_location AS location,
+                  object_phone AS phone,
+                  object_work_time AS work_time,
+                  object_link AS link,
+                  object_photo AS photo
          FROM
-               special_object
+               special_object 
          WHERE 
-                  object_id = $1 AND object_add_type = 'mosque' AND  object_status = true
-      `, object_id)
+                  object_id = $1 AND object_type = $2 AND  object_is_delete = false AND object_status = true
+      `, object_id, type)
    }
 
-   SEARCH_MOSQUES(search_data, page, limit) {
+   SEARCH_OBJECTS(search_data, page, limit, type) {
       return this.fetchAll(`
       SELECT   
                object_id AS id,
@@ -139,90 +136,84 @@ class Mosques extends PG {
                object_address_uz AS address_uz,
                object_address_ru AS address_ru,
                object_address_en AS address_en,
-               object_location_x AS location_x,
-               object_location_y AS location_y,
+               object_location AS location,
                object_phone AS phone,
+               object_work_time AS work_time,
                object_link AS link,
                object_photo AS photo,
-               object_type_oz AS type_oz,
-               object_type_uz AS type_uz,
-               object_type_ru AS type_ru,
-               object_type_en AS type_en,pe,
+               object_type AS type,
                object_status AS status,
                region_id,
                shrine_id
       FROM
             special_object
       WHERE 
-               object_is_delete = false AND object_add_type = 'mosque' AND (object_name_oz ILIKE $1 OR object_name_uz ILIKE $1 OR object_name_ru ILIKE $1 OR object_name_en ILIKE $1 OR object_info_oz ILIKE $1 OR object_info_uz ILIKE $1 OR object_info_ru ILIKE $1 OR object_info_en ILIKE $1)
+               object_is_delete = false AND object_type = $4 AND (object_name_oz ILIKE $1 OR object_name_uz ILIKE $1 OR object_name_ru ILIKE $1 OR object_name_en ILIKE $1 OR object_info_oz ILIKE $1 OR object_info_uz ILIKE $1 OR object_info_ru ILIKE $1 OR object_info_en ILIKE $1 OR object_title_oz ILIKE $1 OR object_title_uz ILIKE $1 OR object_title_ru ILIKE $1 OR object_title_en ILIKE $1)
       ORDER BY
                object_id DESC
      OFFSET $2 LIMIT $3  
-   `, search_data, (page - 1) * limit, limit)
+   `, search_data, (page - 1) * limit, limit, type)
    }
 
-   COUNT_MOSQUES_SEARCH(search_data) {
+   COUNT_OBJECTS_SEARCH(search_data, type) {
       return this.fetch(`
       SELECT 
             COUNT(*) 
       FROM
             special_object
       WHERE 
-            object_is_delete = false AND object_add_type = 'mosque' AND (object_name_oz ILIKE $1 OR object_name_uz ILIKE $1 OR object_name_ru ILIKE $1 OR object_name_en ILIKE $1 OR object_info_oz ILIKE $1 OR object_info_uz ILIKE $1 OR object_info_ru ILIKE $1 OR object_info_en ILIKE $1)
-   `, search_data)
+            object_is_delete = false AND object_type = $2 AND (object_name_oz ILIKE $1 OR object_name_uz ILIKE $1 OR object_name_ru ILIKE $1 OR object_name_en ILIKE $1 OR object_info_oz ILIKE $1 OR object_info_uz ILIKE $1 OR object_info_ru ILIKE $1 OR object_info_en ILIKE $1 OR object_title_oz ILIKE $1 OR object_title_uz ILIKE $1 OR object_title_ru ILIKE $1 OR object_title_en ILIKE $1)
+   `, search_data, type)
    }
 
-   COUNT_MOSQUES() {
+   COUNT_OBJECTS(type) {
       return this.fetch(`
       SELECT 
             COUNT(*) 
       FROM
             special_object
       WHERE 
-            object_is_delete = false AND object_add_type = 'mosque'
-   `)
+            object_is_delete = false AND object_type = $1
+   `, type)
    }
 
-   SINGLE_MOSQUE(object_id) {
+   SINGLE_OBJECT(object_id) {
       return this.fetch(`
          SELECT   
-               object_id AS id,
-               object_name_oz AS name_oz,
-               object_name_uz AS name_uz,
-               object_name_ru AS name_ru,
-               object_name_en AS name_en,
-               object_title_oz AS title_oz,
-               object_title_uz AS title_uz,
-               object_title_ru AS title_ru,
-               object_title_en AS title_en,
-               object_info_oz AS info_oz,
-               object_info_uz AS info_uz,
-               object_info_ru AS info_ru,
-               object_info_en AS info_en,
-               object_address_oz AS address_oz,
-               object_address_uz AS address_uz,
-               object_address_ru AS address_ru,
-               object_address_en AS address_en,
-               object_location_x AS location_x,
-               object_location_y AS location_y,
-               object_phone AS phone,
-               object_link AS link,
-               object_photo AS photo,
-               object_type_oz AS type_oz,
-               object_type_uz AS type_uz,
-               object_type_ru AS type_ru,
-               object_type_en AS type_en,
-               object_status AS status,
-               region_id,
-               shrine_id
+                  object_id AS id,
+                  object_name_oz AS name_oz,
+                  object_name_uz AS name_uz,
+                  object_name_ru AS name_ru,
+                  object_name_en AS name_en,
+                  object_title_oz AS title_oz,
+                  object_title_uz AS title_uz,
+                  object_title_ru AS title_ru,
+                  object_title_en AS title_en,
+                  object_info_oz AS info_oz,
+                  object_info_uz AS info_uz,
+                  object_info_ru AS info_ru,
+                  object_info_en AS info_en,
+                  object_address_oz AS address_oz,
+                  object_address_uz AS address_uz,
+                  object_address_ru AS address_ru,
+                  object_address_en AS address_en,
+                  object_location AS location,
+                  object_phone AS phone,
+                  object_work_time AS work_time,
+                  object_link AS link,
+                  object_photo AS photo,
+                  object_type AS type,
+                  object_status AS status,
+                  region_id,
+                  shrine_id
          FROM
-               special_object
+               special_object 
          WHERE 
-                  object_id = $1 AND object_add_type = 'mosque'
-      `, object_id)
+                  object_id = $1 AND object_type = $2
+         `, object_id, type)
    }
 
-   SELECT_MOSQUE(object_id) {
+   SELECT_OBJECT(object_id, type) {
       return this.fetch(`
          SELECT
                   object_photo AS photo,
@@ -230,11 +221,11 @@ class Mosques extends PG {
          FROM  
                   special_object
          WHERE
-                  object_id = $1 AND object_add_type = 'mosque'
-      `, object_id)
+                  object_id = $1 AND object_type = $2
+      `, object_id, type)
    }
 
-   ADD_MOSQUE(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, link, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id, shrine_id) {
+   ADD_OBJECT(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location, phone, work_time, link, photo, photo_name, type, status, region_id, shrine_id) {
       return this.fetch(`
          INSERT INTO
                      special_object ( 
@@ -254,17 +245,13 @@ class Mosques extends PG {
                         object_address_uz,
                         object_address_ru,
                         object_address_en,
-                        object_location_x,
-                        object_location_y,
+                        object_location,
                         object_phone,
+                        object_work_time,
                         object_link,
                         object_photo,
                         object_photo_name,
-                        object_type_oz,
-                        object_type_uz,
-                        object_type_ru,
-                        object_type_en,
-                        object_add_type, 
+                        object_type,                        
                         object_status, 
                         region_id, 
                         shrine_id
@@ -294,17 +281,13 @@ class Mosques extends PG {
                            $22,
                            $23,
                            $24,
-                           $25,
-                           $26,
-                           'mosque',
-                           $27,
-                           $28,
-                           $29                           
+                           $25, 
+                           $26                                                     
                         )
-         RETURNING *`, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, link, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id, shrine_id)
+         RETURNING *`, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location, phone, work_time, link, photo, photo_name, type, status, region_id, shrine_id)
    }
 
-   UPDATE_MOSQUE(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, link, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id, shrine_id) {
+   UPDATE_OBJECT(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location, phone, work_time, link, photo, photo_name, type, status, region_id, shrine_id) {
       return this.fetch(`
          UPDATE
                   special_object 
@@ -325,37 +308,34 @@ class Mosques extends PG {
                         object_address_uz = $15,
                         object_address_ru = $16,
                         object_address_en = $17,
-                        object_location_x = $18,
-                        object_location_y = $19,
-                        object_phone = $20,
+                        object_location = $18,
+                        object_phone = $19,
+                        object_work_time = $20
                         object_link = $21,
                         object_photo = $22,
                         object_photo_name = $23,
-                        object_type_oz = $24,
-                        object_type_uz = $25,
-                        object_type_ru = $26,
-                        object_type_en = $27, 
-                        object_status = $28, 
-                        region_id = $29, 
-                        shrine_id = $30
+                        object_type = $24, 
+                        object_status = $25, 
+                        region_id = $26, 
+                        shrine_id = $27
          WHERE 
                      object_id = $1      
                            
-         RETURNING *`, id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, link, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id, shrine_id)
+         RETURNING *`, id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location, phone, work_time, link, photo, photo_name, type, status, region_id, shrine_id)
    }
 
-   EDIT_MOSQUE(object_id, object_status) {
+   EDIT_OBJECT(object_id, object_status, type) {
       return this.fetch(`
          UPDATE
                   special_object
          SET
                   object_status = $2
          WHERE
-                  object_id = $1
-      RETURNING *`, object_id, object_status)
+                  object_id = $1 AND object_type = $3
+      RETURNING *`, object_id, object_status, type)
    }
 
-   DELETE_MOSQUE(object_id) {
+   DELETE_OBJECT(object_id, type) {
       return this.fetch(`
          UPDATE
                   special_object
@@ -363,9 +343,9 @@ class Mosques extends PG {
                   object_is_delete = true,
                   object_deleted_at = CURRENT_TIMESTAMP
          WHERE
-                  object_id = $1
-      RETURNING *`, object_id)
+                  object_id = $1 AND object_type = $2
+      RETURNING *`, object_id, type)
    }
 }
 
-module.exports = new Mosques
+module.exports = new SpecialObject

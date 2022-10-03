@@ -29,13 +29,9 @@ class Shrine extends PG {
                shrine_address_uz AS address_uz,
                shrine_address_ru AS address_ru,
                shrine_address_en AS address_en,
-               shrine_location_x AS location_x,
-               shrine_location_y AS location_y,
+               shrine_location AS location,
                shrine_phone AS phone,
-               shrine_type_oz AS type_oz,
-               shrine_type_uz AS type_uz,
-               shrine_type_ru AS type_ru,
-               shrine_type_en AS type_en,
+               shrine_type AS type,               
                shrine_top AS top,
                shrine_video AS video,
                shrine_audio AS audio,
@@ -126,8 +122,7 @@ class Shrine extends PG {
                shrine_address_uz AS address_uz,
                shrine_address_ru AS address_ru,
                shrine_address_en AS address_en,
-               shrine_location_x AS location_x,
-               shrine_location_y AS location_y,
+               shrine_location AS location,
                shrine_phone AS phone,
                shrine_video AS video,
                shrine_audio AS audio,
@@ -188,13 +183,9 @@ class Shrine extends PG {
                shrine_address_uz AS address_uz,
                shrine_address_ru AS address_ru,
                shrine_address_en AS address_en,
-               shrine_location_x AS location_x,
-               shrine_location_y AS location_y,
+               shrine_location AS location,
                shrine_phone AS phone,
-               shrine_type_oz AS type_oz,
-               shrine_type_uz AS type_uz,
-               shrine_type_ru AS type_ru,
-               shrine_type_en AS type_en,
+               shrine_type AS type,             
                shrine_top AS top,
                shrine_video AS video,
                shrine_audio AS audio,
@@ -204,7 +195,7 @@ class Shrine extends PG {
          FROM
                   shrines
          WHERE 
-                  shrine_is_delete = false AND (shrine_name_oz ILIKE $1 OR shrine_name_uz ILIKE $1 OR shrine_name_ru ILIKE $1 OR shrine_name_en ILIKE $1 OR shrine_info_oz ILIKE $1 OR shrine_info_uz ILIKE $1 OR shrine_info_ru ILIKE $1 OR shrine_info_en ILIKE $1 OR shrine_type_oz ILIKE $1 OR shrine_type_uz ILIKE $1 OR shrine_type_ru ILIKE $1 OR shrine_type_en ILIKE $1)
+                  shrine_is_delete = false AND (shrine_name_oz ILIKE $1 OR shrine_name_uz ILIKE $1 OR shrine_name_ru ILIKE $1 OR shrine_name_en ILIKE $1 OR shrine_info_oz ILIKE $1 OR shrine_info_uz ILIKE $1 OR shrine_info_ru ILIKE $1 OR shrine_info_en ILIKE $1 OR shrine_title_oz ILIKE $1 OR shrine_title_uz ILIKE $1 OR shrine_title_ru ILIKE $1 OR shrine_title_en ILIKE $1)
          ORDER BY
                   shrine_id DESC
          OFFSET $2 LIMIT $3
@@ -229,7 +220,7 @@ class Shrine extends PG {
          FROM
                shrines
          WHERE 
-               shrine_is_delete = false AND (shrine_name_oz ILIKE $1 OR shrine_name_uz ILIKE $1 OR shrine_name_ru ILIKE $1 OR shrine_name_en ILIKE $1 OR shrine_info_oz ILIKE $1 OR shrine_info_uz ILIKE $1 OR shrine_info_ru ILIKE $1 OR shrine_info_en ILIKE $1 OR shrine_type_oz ILIKE $1 OR shrine_type_uz ILIKE $1 OR shrine_type_ru ILIKE $1 OR shrine_type_en ILIKE $1)
+               shrine_is_delete = false AND (shrine_name_oz ILIKE $1 OR shrine_name_uz ILIKE $1 OR shrine_name_ru ILIKE $1 OR shrine_name_en ILIKE $1 OR shrine_info_oz ILIKE $1 OR shrine_info_uz ILIKE $1 OR shrine_info_ru ILIKE $1 OR shrine_info_en ILIKE $1 OR shrine_title_oz ILIKE $1 OR shrine_title_uz ILIKE $1 OR shrine_title_ru ILIKE $1 OR shrine_title_en ILIKE $1)
       `, search_data)
    }
 
@@ -261,13 +252,9 @@ class Shrine extends PG {
                shrine_address_uz AS address_uz,
                shrine_address_ru AS address_ru,
                shrine_address_en AS address_en,
-               shrine_location_x AS location_x,
-               shrine_location_y AS location_y,
+               shrine_location AS location,
                shrine_phone AS phone,
-               shrine_type_oz AS type_oz,
-               shrine_type_uz AS type_uz,
-               shrine_type_ru AS type_ru,
-               shrine_type_en AS type_en,
+               shrine_type AS type,
                shrine_top AS top,
                shrine_video AS video,
                shrine_audio AS audio,
@@ -297,7 +284,7 @@ class Shrine extends PG {
       `, shrine_id )
    }
 
-   ADD_SHRINE(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, type_oz, type_uz, type_ru, type_en, top, video, video_name, audio, audio_name, photo, photo_name, status, region_id ) {
+   ADD_SHRINE(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, video, video_name, audio, audio_name, photo, photo_name, status, region_id ) {
       return this.fetch(`
          INSERT INTO
                      shrines(
@@ -325,13 +312,9 @@ class Shrine extends PG {
                         shrine_address_uz,
                         shrine_address_ru,
                         shrine_address_en,
-                        shrine_location_x,
-                        shrine_location_y,
+                        shrine_location,
                         shrine_phone,
-                        shrine_type_oz,
-                        shrine_type_uz,
-                        shrine_type_ru,
-                        shrine_type_en,
+                        shrine_type,
                         shrine_top,
                         shrine_video,
                         shrine_video_name,
@@ -378,16 +361,12 @@ class Shrine extends PG {
                         $33,
                         $34,
                         $35,
-                        $36,
-                        $37,
-                        $38,
-                        $39,
-                        $40,                   
+                        $36                  
                      )
-      RETURNING *`, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, type_oz, type_uz, type_ru, type_en, top, video, video_name, audio, audio_name, photo, photo_name, status, region_id )
+      RETURNING *`, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, video, video_name, audio, audio_name, photo, photo_name, status, region_id )
    }
 
-   UPDATE_SHRINE(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, type_oz, type_uz, type_ru, type_en, top, video, video_name, audio, audio_name, photo, photo_name, status, region_id) {
+   UPDATE_SHRINE(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, video, video_name, audio, audio_name, photo, photo_name, status, region_id) {
       return this.fetch(`
          UPDATE
                   shrines
@@ -416,25 +395,21 @@ class Shrine extends PG {
                      shrine_address_uz = $23,
                      shrine_address_ru = $24,
                      shrine_address_en = $25,
-                     shrine_location_x = $26,
-                     shrine_location_y = $27,
-                     shrine_phone = $28,
-                     shrine_type_oz = $29,
-                     shrine_type_uz = $30,
-                     shrine_type_ru = $31,
-                     shrine_type_en = $32,
-                     shrine_top = $33,
-                     shrine_video = $34,
-                     shrine_video_name = $35,
-                     shrine_audio = $36,
-                     shrine_audio_name = $37,
-                     shrine_photo = $38,
-                     shrine_photo_name = $39,
-                     shrine_status = $40,
-                     region_id = $41
+                     shrine_location = $26,                     
+                     shrine_phone = $27,
+                     shrine_type = $28,                     
+                     shrine_top = $29,
+                     shrine_video = $30,
+                     shrine_video_name = $31,
+                     shrine_audio = $32,
+                     shrine_audio_name = $33,
+                     shrine_photo = $34,
+                     shrine_photo_name = $35,
+                     shrine_status = $36,
+                     region_id = $37
          WHERE
                   shrine_id = $1  
-      RETURNING *`, id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, type_oz, type_uz, type_ru, type_en, top, video, video_name, audio, audio_name, photo, photo_name, status, region_id)
+      RETURNING *`, id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, video, video_name, audio, audio_name, photo, photo_name, status, region_id)
    }
 
    EDIT_SHRINE(shrine_id, shrine_status) {

@@ -128,7 +128,9 @@ module.exports = {
       try {
 
          const mediaUpload = req.file;
-         const { title, status } = req.body;
+         const { title : titles, status } = req.body;
+
+         const title = JSON.parse(titles)
 
          const title_oz = title.oz
          const title_uz = title.uz
@@ -167,7 +169,9 @@ module.exports = {
       try {
 
          const mediaUpload = req.file;
-         const { id, title, status } = req.body;
+         const { id, title : titles, status } = req.body;
+
+         const title = JSON.parse(titles)
 
          const title_oz = title.oz
          const title_uz = title.uz

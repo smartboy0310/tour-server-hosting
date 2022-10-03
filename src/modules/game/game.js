@@ -349,7 +349,12 @@ module.exports = {
       try {
 
          const uploadMedia = req.files
-         const { name, title, info, type, status, region_id } = req.body
+         const { name : names, title : titles, info : infos, type, status, region_id } = req.body
+         
+         const name = JSON.parse(names)
+         const title = JSON.parse(titles)
+         const info = JSON.parse(infos)        
+        
 
          const name_oz = name.oz
          const name_uz = name.uz
@@ -364,12 +369,7 @@ module.exports = {
          const info_oz = info.oz
          const info_uz = info.uz
          const info_ru = info.ru
-         const info_en = info.en
-
-         const type_oz = type.oz
-         const type_uz = type.uz
-         const type_ru = type.ru
-         const type_en = type.en
+         const info_en = info.en        
 
          const game_photo = []
          const game_photo_name = []
@@ -381,7 +381,7 @@ module.exports = {
             game_photo_name.push(e.filename)
          })
 
-         const createdGame = await model.ADD_GAME(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, game_video, game_video_name, game_photo, game_photo_name, type_oz, type_uz, type_ru, type_en, status, region_id)
+         const createdGame = await model.ADD_GAME(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, game_video, game_video_name, game_photo, game_photo_name, type, status, region_id)
 
          if (createdGame) {
             res.json({
@@ -410,8 +410,13 @@ module.exports = {
       try {
 
          const uploadMedia = req.files
-         const { id, name, title, info, type, status, region_id } = req.body
 
+         const {id, name : names, title : titles, info : infos, type, status, region_id } = req.body
+         
+         const name = JSON.parse(names)
+         const title = JSON.parse(titles)
+         const info = JSON.parse(infos)        
+        
          const name_oz = name.oz
          const name_uz = name.uz
          const name_ru = name.ru
@@ -425,12 +430,7 @@ module.exports = {
          const info_oz = info.oz
          const info_uz = info.uz
          const info_ru = info.ru
-         const info_en = info.en
-
-         const type_oz = type.oz
-         const type_uz = type.uz
-         const type_ru = type.ru
-         const type_en = type.en
+         const info_en = info.en         
 
          const game_photo = []
          const game_photo_name = []
@@ -469,7 +469,7 @@ module.exports = {
             game_video = foundGame?.game_video
             game_video_name = foundGame?.game_video_name
          }
-         const updateGame = await model.UPDATE_GAME(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, game_video, game_video_name, game_photo, game_photo_name, type_oz, type_uz, type_ru, type_en, status, region_id)
+         const updateGame = await model.UPDATE_GAME(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, game_video, game_video_name, game_photo, game_photo_name, type, status, region_id)
 
          if (updateGame) {
             res.json({

@@ -212,7 +212,11 @@ module.exports = {
    POST: async (req, res) => {
       try {
          const uploadPhoto = req.file
-         const { name, role, info, status } = req.body
+         const { name : names, role : roles, info : infos, status } = req.body
+
+         const name = JSON.parse(names)
+         const role = JSON.parse(roles)
+         const info = JSON.parse(infos)
 
          const name_oz = name.oz
          const name_uz = name.uz
@@ -259,7 +263,11 @@ module.exports = {
    PUT: async (req, res) => {
       try {
          const uploadPhoto = req.file
-         const { id, name, role, info, status } = req.body
+         const { id, name : names, role : roles, info : infos, status } = req.body
+
+         const name = JSON.parse(names)
+         const role = JSON.parse(roles)
+         const info = JSON.parse(infos)
 
          const name_oz = name.oz
          const name_uz = name.uz

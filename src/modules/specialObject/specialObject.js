@@ -6,21 +6,21 @@ require('dotenv').config()
 module.exports = {
    GET: async (req, res) => {
       try {
-         const { search_data, page, limit } = req.query
+         const { type } = req.params
+         const { search_data, page, limit, } = req.query
 
          const sendData = []
          const name = {}
          const title = {}
          const info = {}
-         const address = {}
-         const location = {}
-         const type = {}
+         const address = {}         
+         
+         const countObject = await model.COUNT_OBJECTS(type)
+         const countTrainsSearch = await model.COUNT_OBJECTS_SEARCH(`%${search_data}%`, type)
 
-         const countMosques = await model.COUNT_MOSQUES()
-         const countMosquesSearch = await model.COUNT_MOSQUES_SEARCH(`%${search_data}%`)
          if (search_data) {
 
-            const foundData = await model.SEARCH_MOSQUES(`%${search_data}%`, page, limit)
+            const foundData = await model.SEARCH_TRAINS(`%${search_data}%`, page, limit, type)
 
             foundData?.forEach(e => {
                name.oz = e.name_oz
@@ -41,27 +41,19 @@ module.exports = {
                address.oz = e.address_oz
                address.uz = e.address_uz
                address.ru = e.address_ru
-               address.en = e.address_en
-
-               location.x = e.location_x
-               location.y = e.location_y
-
-               type.oz = e.type_oz
-               type.uz = e.type_uz
-               type.ru = e.type_ru
-               type.en = e.type_en
-
+               address.en = e.address_en              
+               
                sendData.push({
                   id: e.id,
                   name: name,
                   title: title,
                   info: info,
                   address: address,
-                  location: location,
+                  location: e.location,
                   phone: e.phone,
                   link: e.link,
                   photo: e.photo,
-                  type: type,
+                  type: e.type,
                   status: e.status,
                   region_id: e.region_id,
                   shrine_id: e.shrine_id
@@ -70,14 +62,14 @@ module.exports = {
 
             res.json({
                status: 200,
-               totalPages: Math.ceil(parseInt(countMosquesSearch?.count) / limit),
-               totalItems: parseInt(countMosquesSearch?.count),
+               totalPages: Math.ceil(parseInt(countTrainsSearch?.count) / limit),
+               totalItems: parseInt(countTrainsSearch?.count),
                data: sendData
             })
          }
          else {
 
-            const foundData = await model.ALL_MOSQUES(page, limit)
+            const foundData = await model.ALL_TRAINS(page, limit, type)
 
             foundData?.forEach(e => {
                name.oz = e.name_oz
@@ -98,15 +90,7 @@ module.exports = {
                address.oz = e.address_oz
                address.uz = e.address_uz
                address.ru = e.address_ru
-               address.en = e.address_en
-
-               location.x = e.location_x
-               location.y = e.location_y
-
-               type.oz = e.type_oz
-               type.uz = e.type_uz
-               type.ru = e.type_ru
-               type.en = e.type_en
+               address.en = e.address_en              
 
                sendData.push({
                   id: e.id,
@@ -114,11 +98,11 @@ module.exports = {
                   title: title,
                   info: info,
                   address: address,
-                  location: location,
+                  location: e.location,
                   phone: e.phone,
                   link: e.link,
                   photo: e.photo,
-                  type: type,
+                  type: e.type,
                   status: e.status,
                   region_id: e.region_id,
                   shrine_id: e.shrine_id
@@ -127,8 +111,8 @@ module.exports = {
 
             res.json({
                status: 200,
-               totalPages: Math.ceil(parseInt(countMosques?.count) / limit),
-               totalItems: parseInt(countMosques?.count),
+               totalPages: Math.ceil(parseInt(countObject?.count) / limit),
+               totalItems: parseInt(countObject?.count),
                data: sendData
             })
          }
@@ -143,17 +127,15 @@ module.exports = {
 
    GET_SINGLE: async (req, res) => {
       try {
-         const { id } = req.params
+         const { type, id } = req.params
 
          const sendData = {}
          const name = {}
          const title = {}
-         const info = {}
+         const info = {}         
          const address = {}
-         const location = {}
-         const type = {}
-
-         const foundData = await model.SINGLE_MOSQUE(id)
+        
+         const foundData = await model.SINGLE_TRAIN(id, type)
 
          name.oz = foundData?.name_oz
          name.uz = foundData?.name_uz
@@ -168,35 +150,27 @@ module.exports = {
          info.oz = foundData?.info_oz
          info.uz = foundData?.info_uz
          info.ru = foundData?.info_ru
-         info.en = foundData?.info_en
+         info.en = foundData?.info_en         
 
          address.oz = foundData?.address_oz
          address.uz = foundData?.address_uz
          address.ru = foundData?.address_ru
          address.en = foundData?.address_en
-
-         location.x = foundData?.location_x
-         location.y = foundData?.location_y
-
-         type.oz = foundData?.type_oz
-         type.uz = foundData?.type_uz
-         type.ru = foundData?.type_ru
-         type.en = foundData?.type_en
-
+        
          sendData.id = foundData?.id
          sendData.name = name
          sendData.title = title
          sendData.info = info
          sendData.address = address
-         sendData.location = location
+         sendData.location = foundData?.location
          sendData.phone = foundData?.phone
          sendData.link = foundData?.link
          sendData.photo = foundData?.photo
-         sendData.type = type
+         sendData.type = foundData?.type      
          sendData.status = foundData?.status
          sendData.region_id = foundData?.region_id
          sendData.shrine_id = foundData?.shrine_id
-
+         
          if (foundData) {
             res.json({
                status: 200,
@@ -218,16 +192,16 @@ module.exports = {
          })
       }
    },
-
-   GET_ACTIVE: async (req, res) => {
+   
+   GET_BY_REGION: async (req, res) => {
       try {
-         const { reg_id } = req.params
+         const { type, region_id } = req.params
 
          const sendData = []
          const name = {}
          const title = {}
 
-         const foundData = await model.MOSQUES_BY_REGION(reg_id)
+         const foundData = await model.MOSQUES_BY_REGION(region_id, type)
 
          foundData?.forEach(e => {
             name.oz = e.name_oz
@@ -270,32 +244,58 @@ module.exports = {
       }
    },
 
-   GET_ACTIVE_BY_SHRINE: async (req, res) => {
+   GET_BY_SHRINE: async (req, res) => {
       try {
-         const { shrine_id } = req.params
+         const { type } = req.params
+         const { reg_id, shrine_id } = req.query
 
          const sendData = {}
          const name = {}
          const title = {}
-        
-         const foundData = await model.MOSQUES_BY_SHRINE(shrine_id)
 
-         name.oz = foundData?.name_oz
-         name.uz = foundData?.name_uz
-         name.ru = foundData?.name_ru
-         name.en = foundData?.name_en
+         const foundByRegion = await model.OBJECTS_BY_REGION(reg_id, type)
+         const foundByShrine = await model.OBJECT_BY_SHRINE(shrine_id, type)
 
-         title.oz = foundData?.title_oz
-         title.uz = foundData?.title_uz
-         title.ru = foundData?.title_ru
-         title.en = foundData?.title_en         
+         if (foundByShrine) {
 
-         sendData.id = foundData?.id
-         sendData.name = name
-         sendData.title = title        
-         sendData.photo = foundData?.photo
-         
-         if (foundData) {
+            name.oz = foundByShrine?.name_oz
+            name.uz = foundByShrine?.name_uz
+            name.ru = foundByShrine?.name_ru
+            name.en = foundByShrine?.name_en
+
+            title.oz = foundByShrine?.title_oz
+            title.uz = foundByShrine?.title_uz
+            title.ru = foundByShrine?.title_ru
+            title.en = foundByShrine?.title_en
+
+            sendData.id = foundByShrine?.id
+            sendData.name = name
+            sendData.title = title
+            sendData.photo = foundByShrine?.photo
+
+
+            res.json({
+               status: 200,
+               data: sendData
+            })
+         }
+         else if (foundByRegion) {
+
+            name.oz = foundByRegion[0]?.name_oz
+            name.uz = foundByRegion[0]?.name_uz
+            name.ru = foundByRegion[0]?.name_ru
+            name.en = foundByRegion[0]?.name_en
+
+            title.oz = foundByRegion[0]?.title_oz
+            title.uz = foundByRegion[0]?.title_uz
+            title.ru = foundByRegion[0]?.title_ru
+            title.en = foundByRegion[0]?.title_en
+
+            sendData.id = foundByShrine?.id
+            sendData.name = name
+            sendData.title = title
+            sendData.photo = foundByShrine?.photo
+
             res.json({
                status: 200,
                data: sendData
@@ -319,16 +319,15 @@ module.exports = {
 
    GET_ACTIVE_SINGLE: async (req, res) => {
       try {
-         const { id } = req.params
+         const { type, id } = req.params
 
          const sendData = {}
          const name = {}
          const title = {}
          const info = {}         
          const address = {}
-         const location = {}
-         
-         const foundData = await model.SINGLE_ACTIVE_MOSQUE(id)
+                  
+         const foundData = await model.SINGLE_ACTIVE_OBJECT(id, type)
 
          name.oz = foundData?.name_oz
          name.uz = foundData?.name_uz
@@ -348,21 +347,18 @@ module.exports = {
          address.oz = foundData?.address_oz
          address.uz = foundData?.address_uz
          address.ru = foundData?.address_ru
-         address.en = foundData?.address_en
-
-         location.x = foundData?.location_x
-         location.y = foundData?.location_y         
+         address.en = foundData?.address_en              
 
          sendData.id = foundData?.id
          sendData.name = name
          sendData.title = title
          sendData.info = info
          sendData.address = address
-         sendData.location = location
+         sendData.location = foundData?.location
          sendData.phone = foundData?.phone
          sendData.link = foundData?.link
-         sendData.photo = foundData?.photo
-         
+         sendData.photo = foundData?.photo       
+        
          if (foundData) {
             res.json({
                status: 200,
@@ -388,9 +384,18 @@ module.exports = {
    POST: async (req, res) => {
       try {
 
+         const { type } = req.params
          const mediaUpload = req.files;
 
-         const { name, title, info, address, location, phone, link, type, status, region_id, shrine_id } = req.body;
+         const { name : names, title : titles, info : infos, address : addresss, location, phone, link, work_time, status, region_id, shrine_id } = req.body;
+
+         const shrineId = shrine_id ? shrine_id : null
+         const workTime = work_time ? work_time : null
+
+         const name = JSON.parse(names)
+         const title = JSON.parse(titles)
+         const info = JSON.parse(infos)              
+         const address = JSON.parse(addresss)         
 
          const name_oz = name?.oz
          const name_uz = name?.uz
@@ -410,15 +415,7 @@ module.exports = {
          const address_oz = address?.oz
          const address_uz = address?.uz
          const address_ru = address?.ru
-         const address_en = address?.en
-
-         const location_x = location?.x
-         const location_y = location?.y
-
-         const type_oz = type?.oz
-         const type_uz = type?.uz
-         const type_ru = type?.ru
-         const type_en = type?.en
+         const address_en = address?.en        
 
          const photo = []
          const photo_name = []
@@ -429,12 +426,12 @@ module.exports = {
          })
 
 
-         const createMosque = await model.ADD_MOSQUE(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, link, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id, shrine_id)
+         const createObject = await model.ADD_OBJECT(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location, phone, workTime, link, photo, photo_name, type, status, region_id, shrineId)
 
-         if (createMosque) {
+         if (createObject) {
             res.json({
                status: 200,
-               message: 'Mosque Created'
+               message: `${type} created`
             })
          }
          else {
@@ -457,9 +454,15 @@ module.exports = {
    PUT: async (req, res) => {
       try {
 
+         const { type } = req.params
          const mediaUpload = req.files;
 
-         const { id, name, title, info, address, location, phone, link, type, status, region_id, shrine_id } = req.body;
+         const { id, name : names, title : titles, info : infos, address : addresss, location, phone, link, status, region_id, shrine_id } = req.body;
+
+         const name = JSON.parse(names)
+         const title = JSON.parse(titles)
+         const info = JSON.parse(infos)               
+         const address = JSON.parse(addresss)
 
          const name_oz = name?.oz
          const name_uz = name?.uz
@@ -481,22 +484,14 @@ module.exports = {
          const address_ru = address?.ru
          const address_en = address?.en
 
-         const location_x = location?.x
-         const location_y = location?.y
-
-         const type_oz = type?.oz
-         const type_uz = type?.uz
-         const type_ru = type?.ru
-         const type_en = type?.en
-
          const photo = []
          const photo_name = []
 
-         const foundMosque = await model.SELECT_MOSQUE(id)
+         const foundObject = await model.SELECT_OBJECT(id, type)
 
          if (mediaUpload.length) {
 
-            foundMosque?.photo_name.forEach(e => {
+            foundObject?.photo_name.forEach(e => {
                new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${e}`)).delete()
             })
 
@@ -506,20 +501,20 @@ module.exports = {
             })
          }
          else {
-            foundMosque?.photo.forEach(e => {
+            foundObject?.photo.forEach(e => {
                photo.push(e)
             })
-            foundMosque?.photo_name.forEach(e => {
+            foundObject?.photo_name.forEach(e => {
                photo_name.push(e)
             })
          }
 
-         const updateMosque = await model.UPDATE_MOSQUE(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location_x, location_y, phone, link, photo, photo_name, type_oz, type_uz, type_ru, type_en, status, region_id, shrine_id)
+         const updateObject = await model.UPDATE_OBJECT(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location, phone, link, photo, photo_name, type, status, region_id, shrine_id)
 
-         if (updateMosque) {
+         if (updateObject) {
             res.json({
                status: 200,
-               message: 'Mosque Updated'
+               message: `${type} created`
             })
          }
          else {
@@ -541,14 +536,15 @@ module.exports = {
 
    EDIT_STATUS: async (req, res) => {
       try {
+         const { type } = req.params
          const { id, status } = req.body
 
-         const editMosque = await model.EDIT_MOSQUE(id, status)
+         const editObject = await model.EDIT_OBJECT(id, status, type)
 
-         if (editMosque) {
+         if (editObject) {
             res.json({
                status: 200,
-               message: 'Mosque status edited'
+               message: `${type} status edited`
             })
          }
          else {
@@ -570,23 +566,23 @@ module.exports = {
 
    DELETE: async (req, res) => {
       try {
-
+         const { type } = req.params
          const { id } = req.body;
 
-         const deleteMosque = await model.DELETE_MOSQUE(id)
+         const deleteObject = await model.DELETE_OBJECT(id, type)
 
-         const foundMosque = await model.SELECT_MOSQUE(id)
+         const foundObject = await model.SELECT_OBJECT(id, type)
 
 
-         if (deleteMosque) {
+         if (deleteObject) {
 
-            foundMosque?.photo_name.forEach(e => {
+            foundObject?.photo_name.forEach(e => {
                new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${e}`)).delete()
             })
 
             res.json({
                status: 200,
-               message: 'Mosque Deleted'
+               message: `${type} deleted`
             })
          }
          else {
