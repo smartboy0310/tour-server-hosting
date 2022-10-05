@@ -139,12 +139,12 @@ router
       .put('/statusParticipant', Authorized.AUTH, Participant.EDIT_STATUS)
       .delete('/participant', Authorized.AUTH, Participant.DELETE)
 
-      .get('/:type', SpecialObject.GET)
-      .get('/:type/single/:id', Authorized.AUTH, SpecialObject.GET_SINGLE)
-      .post('/:type', Authorized.AUTH, FileUpload.array('media'), SpecialObject.POST)
-      .put('/:type', Authorized.AUTH, FileUpload.array('media'), SpecialObject.PUT)
-      .put('/status/:type', Authorized.AUTH, SpecialObject.EDIT_STATUS)
-      .delete('/:type', Authorized.AUTH, SpecialObject.DELETE)
+      .get('/objects/:type', SpecialObject.GET)
+      .get('/objects/:type/single/:id', Authorized.AUTH, SpecialObject.GET_SINGLE)
+      .post('/objects/:type', Authorized.AUTH, FileUpload.array('media'), SpecialObject.POST)
+      .put('/objects/:type', Authorized.AUTH, FileUpload.array('media'), SpecialObject.PUT)
+      .put('/objects/status/:type', Authorized.AUTH, SpecialObject.EDIT_STATUS)
+      .delete('/objects/:type', Authorized.AUTH, SpecialObject.DELETE)
 
       .get('/general', General.GET)
       .put('/general', Authorized.AUTH, FileUpload.array('media'), General.PUT)
@@ -174,9 +174,9 @@ router
       .get('/activeShrine/:reg_id', Shrine.GET_ACTIVE)
       .get('/activeShrine/single/:id', Shrine.GET_ACTIVE_SINGLE)
 
-      .get('/:type/:reg_id', SpecialObject.GET_BY_REGION)
-      .get('/:type', SpecialObject.GET_BY_SHRINE)
-      .get('/:type/single/:id', SpecialObject.GET_ACTIVE_SINGLE)
+      .get('/activeObjects/:type/:reg_id', SpecialObject.GET_BY_REGION)
+      .get('/activeObjects/:type', SpecialObject.GET_BY_SHRINE)
+      .get('/activeObjects/:type/single/:id', SpecialObject.GET_ACTIVE_SINGLE)
      
       .get('/statistics', Statistics.GET)
 

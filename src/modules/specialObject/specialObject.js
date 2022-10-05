@@ -52,6 +52,7 @@ module.exports = {
                   location: e.location,
                   phone: e.phone,
                   link: e.link,
+                  work_time: e.work_time,
                   photo: e.photo,
                   type: e.type,
                   status: e.status,
@@ -59,7 +60,6 @@ module.exports = {
                   shrine_id: e.shrine_id
                })
             })
-
             res.json({
                status: 200,
                totalPages: Math.ceil(parseInt(countTrainsSearch?.count) / limit),
@@ -69,7 +69,7 @@ module.exports = {
          }
          else {
 
-            const foundData = await model.ALL_TRAINS(page, limit, type)
+            const foundData = await model.ALL_OBJECTS(page, limit, type)
 
             foundData?.forEach(e => {
                name.oz = e.name_oz
@@ -102,6 +102,7 @@ module.exports = {
                   phone: e.phone,
                   link: e.link,
                   photo: e.photo,
+                  work_time: e.work_time,
                   type: e.type,
                   status: e.status,
                   region_id: e.region_id,
@@ -128,14 +129,13 @@ module.exports = {
    GET_SINGLE: async (req, res) => {
       try {
          const { type, id } = req.params
-
          const sendData = {}
          const name = {}
          const title = {}
          const info = {}         
          const address = {}
-        
-         const foundData = await model.SINGLE_TRAIN(id, type)
+                 
+         const foundData = await model.SINGLE_OBJECT(id, type)
 
          name.oz = foundData?.name_oz
          name.uz = foundData?.name_uz
@@ -165,6 +165,7 @@ module.exports = {
          sendData.location = foundData?.location
          sendData.phone = foundData?.phone
          sendData.link = foundData?.link
+         sendData.work_time = foundData?.work_time
          sendData.photo = foundData?.photo
          sendData.type = foundData?.type      
          sendData.status = foundData?.status
@@ -201,7 +202,7 @@ module.exports = {
          const name = {}
          const title = {}
 
-         const foundData = await model.MOSQUES_BY_REGION(region_id, type)
+         const foundData = await model.OBJECTS_BY_REGION(region_id, type)
 
          foundData?.forEach(e => {
             name.oz = e.name_oz
@@ -357,6 +358,7 @@ module.exports = {
          sendData.location = foundData?.location
          sendData.phone = foundData?.phone
          sendData.link = foundData?.link
+         sendData.work_time = foundData?.work_time
          sendData.photo = foundData?.photo       
         
          if (foundData) {

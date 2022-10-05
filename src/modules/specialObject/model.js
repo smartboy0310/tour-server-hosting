@@ -1,7 +1,7 @@
 const PG = require('../../lib/postgress/postgress')
 
 class SpecialObject extends PG {
-   ALL_OBJECT(page, limit, type) {
+   ALL_OBJECTS(page, limit, type) {
       return this.fetchAll(`
       SELECT   
                object_id AS id,
@@ -177,7 +177,7 @@ class SpecialObject extends PG {
    `, type)
    }
 
-   SINGLE_OBJECT(object_id) {
+   SINGLE_OBJECT(object_id, type) {
       return this.fetch(`
          SELECT   
                   object_id AS id,

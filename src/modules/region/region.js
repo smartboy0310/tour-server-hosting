@@ -134,7 +134,7 @@ module.exports = {
 
          sendData.id = foundData?.id
          sendData.name = name
-         sendData.short_info = foundData?.short_info
+         sendData.short_info = short_info
          sendData.shrine_count = foundData?.shrine_count
          sendData.video = foundData?.video
          sendData.photo = foundData?.photo
@@ -228,7 +228,7 @@ module.exports = {
 
          sendData.id = foundData?.id
          sendData.name = name
-         sendData.short_info = foundData?.short_info
+         sendData.short_info = short_info
          sendData.shrine_count = foundData?.shrine_count
          sendData.video = foundData?.video
          sendData.photo = foundData?.photo

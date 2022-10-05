@@ -15,10 +15,9 @@ module.exports = {
             const sendData = []
             const name = {}
             const title = {}
-            const info = {}
-            const type = {}
+            const info = {}            
 
-            const foundData = await model.SEARCH_SHRINE(`%${search_data}%`, page, limit)
+            const foundData = await model.SEARCH_GAMES(`%${search_data}%`, page, limit)
 
             foundData?.forEach(e => {
                name.oz = e.name_oz
@@ -34,12 +33,7 @@ module.exports = {
                info.oz = e.info_oz
                info.uz = e.info_uz
                info.ru = e.info_ru
-               info.en = e.info_en
-
-               type.oz = e.type_oz
-               type.uz = e.type_uz
-               type.ru = e.type_ru
-               type.en = e.type_en
+               info.en = e.info_en               
 
                sendData.push({
                   id: e.id,
@@ -48,7 +42,7 @@ module.exports = {
                   info: info,
                   video: e.video,
                   photo: e.photo,
-                  type: type,
+                  type: e.type,
                   status: e.status,
                   region_id: e.region_id
                })
@@ -66,8 +60,7 @@ module.exports = {
             const name = {}
             const title = {}
             const info = {}
-            const type = {}
-
+            
             const foundData = await model.ALL_GAMES(page, limit)
 
             foundData?.forEach(e => {
@@ -84,12 +77,7 @@ module.exports = {
                info.oz = e.info_oz
                info.uz = e.info_uz
                info.ru = e.info_ru
-               info.en = e.info_en
-
-               type.oz = e.type_oz
-               type.uz = e.type_uz
-               type.ru = e.type_ru
-               type.en = e.type_en
+               info.en = e.info_en             
 
                sendData.push({
                   id: e.id,
@@ -98,7 +86,7 @@ module.exports = {
                   info: info,
                   video: e.video,
                   photo: e.photo,
-                  type: type,
+                  type: e.type,
                   status: e.status,
                   region_id: e.region_id
                })
@@ -128,8 +116,7 @@ module.exports = {
          const sendData = {}
          const name = {}
          const title = {}
-         const info = {}
-         const type = {}
+         const info = {}        
 
          const foundData = await model.SINGLE_GAME(id)
 
@@ -146,12 +133,7 @@ module.exports = {
          info.oz = foundData?.info_oz
          info.uz = foundData?.info_uz
          info.ru = foundData?.info_ru
-         info.en = foundData?.info_en
-
-         type.oz = foundData?.type_oz
-         type.uz = foundData?.type_uz
-         type.ru = foundData?.type_ru
-         type.en = foundData?.type_en
+         info.en = foundData?.info_en        
 
          sendData.id = foundData?.id
          sendData.name = name
@@ -159,7 +141,7 @@ module.exports = {
          sendData.info = info
          sendData.video = foundData?.video
          sendData.photo = foundData?.photo
-         sendData.type = type
+         sendData.type = foundData?.type
          sendData.status = foundData?.status
          sendData.region_id = foundData?.region_id
 
