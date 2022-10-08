@@ -96,7 +96,7 @@ class Foods extends PG {
          FROM 
                   foods
          WHERE
-                  food_is_delete = false AND (food_name ->> 'oz' ILIKE $1 OR food_name ->> 'uz' ILIKE $1 OR food_name ->> 'ru' ILIKE $1 OR food_name ->> 'en' ILIKE $1 OR food_info ->> 'oz' ILIKE $1 OR food_info ->> 'uz' ILIKE $1 OR food_info ->> 'ru' ILIKE $1 OR food_info ->> 'en' ILIKE $1)
+                  food_is_delete = false AND (food_name_oz ILIKE $1 OR food_name_uz ILIKE $1 OR food_name_ru ILIKE $1 OR food_name_en ILIKE $1 OR food_info_oz ILIKE $1 OR food_info_uz ILIKE $1 OR food_info_ru ILIKE $1 OR food_info_en ILIKE $1 OR food_title_oz ILIKE $1 OR food_title_uz ILIKE $1 OR food_title_ru ILIKE $1 OR food_title_en ILIKE $1)
          ORDER BY
                   food_id  DESC
          OFFSET $2 LIMIT $3
@@ -121,7 +121,7 @@ class Foods extends PG {
          FROM
                foods
          WHERE 
-               food_is_delete = false AND (food_name ->> 'oz' ILIKE $1 OR food_name ->> 'uz' ILIKE $1 OR food_name ->> 'ru' ILIKE $1 OR food_name ->> 'en' ILIKE $1 OR food_info ->> 'oz' ILIKE $1 OR food_info ->> 'uz' ILIKE $1 OR food_info ->> 'ru' ILIKE $1 OR food_info ->> 'en' ILIKE $1)
+               food_is_delete = false AND (food_name_oz ILIKE $1 OR food_name_uz ILIKE $1 OR food_name_ru ILIKE $1 OR food_name_en ILIKE $1 OR food_info_oz ILIKE $1 OR food_info_uz ILIKE $1 OR food_info_ru ILIKE $1 OR food_info_en ILIKE $1 OR food_title_oz ILIKE $1 OR food_title_uz ILIKE $1 OR food_title_ru ILIKE $1 OR food_title_en ILIKE $1)
       `, search_data)
    }
 

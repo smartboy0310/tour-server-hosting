@@ -331,12 +331,11 @@ module.exports = {
       try {
 
          const uploadMedia = req.files
-         const { name : names, title : titles, info : infos, type, status, region_id } = req.body
+         const { name : names, title : titles, info : infos, video, type, status, region_id } = req.body
          
          const name = JSON.parse(names)
          const title = JSON.parse(titles)
-         const info = JSON.parse(infos)        
-        
+         const info = JSON.parse(infos)                
 
          const name_oz = name.oz
          const name_uz = name.uz
@@ -355,15 +354,13 @@ module.exports = {
 
          const game_photo = []
          const game_photo_name = []
-         const game_video = `${process.env.BACKEND_URL}/${uploadMedia?.video[0].filename}`
-         const game_video_name = uploadMedia?.video[0].filename
-
-         uploadMedia?.photo.forEach(e => {
+        
+         uploadMedia?.forEach(e => {
             game_photo.push(`${process.env.BACKEND_URL}/${e.filename}`)
             game_photo_name.push(e.filename)
          })
 
-         const createdGame = await model.ADD_GAME(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, game_video, game_video_name, game_photo, game_photo_name, type, status, region_id)
+         const createdGame = await model.ADD_GAME(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, game_photo, game_photo_name, type, status, region_id)
 
          if (createdGame) {
             res.json({
@@ -393,7 +390,7 @@ module.exports = {
 
          const uploadMedia = req.files
 
-         const {id, name : names, title : titles, info : infos, type, status, region_id } = req.body
+         const {id, name : names, title : titles, info : infos, video, type, status, region_id } = req.body
          
          const name = JSON.parse(names)
          const title = JSON.parse(titles)
@@ -416,18 +413,16 @@ module.exports = {
 
          const game_photo = []
          const game_photo_name = []
-         let game_video = ''
-         let game_video_name = ''
-
+         
          const foundGame = await model.SELECTED_GAME(id)
 
-         if (uploadMedia?.photo) {
+         if (uploadMedia?.length) {
 
             foundGame?.game_photo_name.forEach(e => {
                new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${e}`)).delete()
             })
 
-            uploadMedia?.photo.forEach(e => {
+            uploadMedia?.forEach(e => {
                game_photo.push(`${process.env.BACKEND_URL}/${e.filename}`)
                game_photo_name.push(e.filename)
             })
@@ -440,18 +435,8 @@ module.exports = {
                game_photo_name.push(e)
             })
          }
-
-         if (uploadMedia?.video) {
-            new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${foundGame?.game_video_name}`)).delete()
-
-            game_video = `${process.env.BACKEND_URL}/${uploadMedia?.video[0].filename}`
-            game_video_name = uploadMedia?.video[0].filename
-         }
-         else {
-            game_video = foundGame?.game_video
-            game_video_name = foundGame?.game_video_name
-         }
-         const updateGame = await model.UPDATE_GAME(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, game_video, game_video_name, game_photo, game_photo_name, type, status, region_id)
+         
+         const updateGame = await model.UPDATE_GAME(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, game_photo, game_photo_name, type, status, region_id)
 
          if (updateGame) {
             res.json({

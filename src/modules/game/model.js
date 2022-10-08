@@ -199,7 +199,7 @@ class Games extends PG {
       `, game_id)
    }
 
-   ADD_GAME (name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type, status, region_id) {
+   ADD_GAME (name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, photo, photo_name, type, status, region_id) {
       return this.fetch(`
          INSERT INTO
                      games (
@@ -216,7 +216,6 @@ class Games extends PG {
                         game_info_ru,
                         game_info_en,
                         game_video,
-                        game_video_name,
                         game_photo,
                         game_photo_name,
                         game_type,                        
@@ -241,13 +240,12 @@ class Games extends PG {
                         $15,
                         $16,
                         $17,
-                        $18,
-                        $19
+                        $18
                   )          
-      RETURNING *`, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type, status, region_id)
+      RETURNING *`, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, photo, photo_name, type, status, region_id)
    }
 
-   UPDATE_GAME(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type, status, region_id) {
+   UPDATE_GAME(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, photo, photo_name, type, status, region_id) {
       return this.fetch(`
             UPDATE
                      games
@@ -265,15 +263,14 @@ class Games extends PG {
                      game_info_ru = $12,
                      game_info_en = $13,
                      game_video = $14,
-                     game_video_name = $15,
-                     game_photo = $16,
-                     game_photo_name = $17,
-                     game_type = $18,               
-                     game_status = $19,
-                     region_id = $20
+                     game_photo = $15,
+                     game_photo_name = $16,
+                     game_type = $17,               
+                     game_status = $18,
+                     region_id = $19
             WHERE
                      game_id = $1
-      RETURNING *`, id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, video_name, photo, photo_name, type, status, region_id)
+      RETURNING *`, id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, video, photo, photo_name, type, status, region_id)
    }
 
    EDIT_GAME(game_id, game_status) {

@@ -262,7 +262,7 @@ module.exports = {
       try {
 
          const uploadMedia = req.files;
-         const { name: names, short_info: info, shrine_count, status } = req.body
+         const { name: names, short_info: info, shrine_count, video, status } = req.body
          const name = JSON.parse(names)
          const short_info = JSON.parse(info)
 
@@ -278,15 +278,13 @@ module.exports = {
 
          const reg_photo = [];
          const reg_photo_name = [];
-         const reg_video = `${process.env.BACKEND_URL}/${uploadMedia?.video[0].filename}`
-         const reg_video_name = uploadMedia?.video[0].filename
-
-         uploadMedia?.photo.forEach(e => {
+        
+         uploadMedia?.forEach(e => {
             reg_photo.push(`${process.env.BACKEND_URL}/${e.filename}`)
             reg_photo_name.push(e.filename)
          })
 
-         const createdRegion = await model.ADD_REGION(name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, reg_video, reg_video_name, reg_photo, reg_photo_name, status)
+         const createdRegion = await model.ADD_REGION(name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, video, reg_photo, reg_photo_name, status)
 
          if (createdRegion) {
             res.json({
@@ -315,7 +313,7 @@ module.exports = {
       try {
 
          const uploadMedia = req.files
-         const { id, name: names, short_info: info, shrine_count, status } = req.body
+         const { id, name: names, short_info: info, shrine_count, video, status } = req.body
 
          const name = JSON.parse(names)
          const short_info = JSON.parse(info)
@@ -331,20 +329,17 @@ module.exports = {
          const short_info_en = short_info.en
 
          const region_photo = []
-         const region_photo_name = []
-
-         let region_video = ''
-         let region_video_name = ''
+         const region_photo_name = []         
 
          const foundRegion = await model.SELECTED_REGION(id)
 
-         if (uploadMedia?.photo) {
+         if (uploadMedia?.length) {
 
             foundRegion?.region_photo_name.forEach(e => {
                new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${e}`)).delete()
             })
 
-            uploadMedia?.photo.forEach(e => {
+            uploadMedia?.forEach(e => {
                region_photo.push(`${process.env.BACKEND_URL}/${e.filename}`)
                region_photo_name.push(e.filename)
             })
@@ -358,18 +353,7 @@ module.exports = {
             })
          }
 
-         if (uploadMedia?.video) {
-            new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${foundRegion?.region_video_name}`)).delete()
-
-            region_video = `${process.env.BACKEND_URL}/${uploadMedia?.video[0].filename}`
-            region_video_name = uploadMedia?.video[0].filename
-         }
-         else {
-            region_video = foundRegion?.region_video
-            region_video_name = foundRegion?.region_video_name
-         }
-
-         const updateRegion = await model.UPDATE_REGION(id, name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, region_video, region_video_name, region_photo, region_photo_name, status)
+         const updateRegion = await model.UPDATE_REGION(id, name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, video, region_photo, region_photo_name, status)
 
          if (updateRegion) {
             res.json({

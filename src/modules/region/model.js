@@ -153,7 +153,7 @@ class Region extends PG {
       `, reg_id)
    }
 
-	ADD_REGION(name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, video, video_name,  photo,  photo_name, status) {
+	ADD_REGION(name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, video, photo,  photo_name, status) {
 		return this.fetch(`
          INSERT INTO
                      regions (
@@ -166,8 +166,7 @@ class Region extends PG {
                            region_short_info_ru,
                            region_short_info_en,
                            region_shrine_count,
-                           region_video,
-                           region_video_name,
+                           region_video,                          
                            region_photo,
                            region_photo_name,
                            region_status
@@ -185,13 +184,12 @@ class Region extends PG {
                         $10,
                         $11,
                         $12,
-                        $13,
-                        $14
+                        $13
                      )
-      RETURNING *`, name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, video, video_name,  photo,  photo_name, status);
+      RETURNING *`, name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, video, photo,  photo_name, status);
 	}
 
-   UPDATE_REGION(id, name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, video, video_name,  photo,  photo_name, status) {
+   UPDATE_REGION(id, name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, video, photo,  photo_name, status) {
       return this.fetch(`
          UPDATE 
                   regions
@@ -206,13 +204,12 @@ class Region extends PG {
                      region_short_info_en = $9,
                      region_shrine_count = $10,
                      region_video = $11,
-                     region_video_name = $12,
-                     region_photo = $13,
-                     region_photo_name = $14,
-                     region_status = $15
+                     region_photo = $12,
+                     region_photo_name = $13,
+                     region_status = $14
          WHERE 
                   region_id = $1      
-      RETURNING *`,id, name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, video, video_name,  photo,  photo_name, status)
+      RETURNING *`,id, name_oz, name_uz, name_ru, name_en, short_info_oz, short_info_uz, short_info_ru, short_info_en, shrine_count, video, photo,  photo_name, status)
    }
 
    EDIT_REGION(reg_id, reg_status) {

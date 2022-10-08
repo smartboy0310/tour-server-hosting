@@ -133,9 +133,7 @@ class Shrine extends PG {
          WHERE
                   shrine_id = $1 AND shrine_is_delete = false AND shrine_status = true
       `, shrine_id)
-   }
-   
-
+   }  
 
    REF_SHRINE (reg_id) {
       return this.fetchAll(`
@@ -144,7 +142,7 @@ class Shrine extends PG {
                shrine_name_oz AS name_oz,
                shrine_name_uz AS name_uz,
                shrine_name_ru AS name_ru,
-               shrine_name_en AS name_en,
+               shrine_name_en AS name_en
          FROM
                shrines
          WHERE 
@@ -284,7 +282,7 @@ class Shrine extends PG {
       `, shrine_id )
    }
 
-   ADD_SHRINE(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, video, video_name, audio, audio_name, photo, photo_name, status, region_id ) {
+   ADD_SHRINE(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, video, audio, audio_name, photo, photo_name, status, region_id ) {
       return this.fetch(`
          INSERT INTO
                      shrines(
@@ -317,7 +315,6 @@ class Shrine extends PG {
                         shrine_type,
                         shrine_top,
                         shrine_video,
-                        shrine_video_name,
                         shrine_audio,
                         shrine_audio_name,
                         shrine_photo,
@@ -360,13 +357,12 @@ class Shrine extends PG {
                         $32,
                         $33,
                         $34,
-                        $35,
-                        $36                  
+                        $35                
                      )
-      RETURNING *`, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, video, video_name, audio, audio_name, photo, photo_name, status, region_id )
+      RETURNING *`, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, video, audio, audio_name, photo, photo_name, status, region_id )
    }
 
-   UPDATE_SHRINE(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, video, video_name, audio, audio_name, photo, photo_name, status, region_id) {
+   UPDATE_SHRINE(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, video, audio, audio_name, photo, photo_name, status, region_id) {
       return this.fetch(`
          UPDATE
                   shrines
@@ -400,16 +396,15 @@ class Shrine extends PG {
                      shrine_type = $28,                     
                      shrine_top = $29,
                      shrine_video = $30,
-                     shrine_video_name = $31,
-                     shrine_audio = $32,
-                     shrine_audio_name = $33,
-                     shrine_photo = $34,
-                     shrine_photo_name = $35,
-                     shrine_status = $36,
-                     region_id = $37
+                     shrine_audio = $31,
+                     shrine_audio_name = $32,
+                     shrine_photo = $33,
+                     shrine_photo_name = $34,
+                     shrine_status = $35,
+                     region_id = $36
          WHERE
                   shrine_id = $1  
-      RETURNING *`, id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, video, video_name, audio, audio_name, photo, photo_name, status, region_id)
+      RETURNING *`, id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, video, audio, audio_name, photo, photo_name, status, region_id)
    }
 
    EDIT_SHRINE(shrine_id, shrine_status) {
