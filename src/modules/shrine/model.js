@@ -271,8 +271,6 @@ class Shrine extends PG {
          SELECT
                   shrine_photo,
                   shrine_photo_name,
-                  shrine_video,
-                  shrine_video_name,
                   shrine_audio, 
                   shrine_audio_name
          FROM  

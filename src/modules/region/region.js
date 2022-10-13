@@ -417,9 +417,7 @@ module.exports = {
 
          if (deleteRegion) {
 
-            new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${foundRegion?.region_video_name}`)).delete()
-
-            foundRegion?.region_photo_name.forEach(e => {
+               foundRegion?.region_photo_name.forEach(e => {
                new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${e}`)).delete()
             })
 

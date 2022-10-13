@@ -500,8 +500,7 @@ module.exports = {
          const foundGame = await model.SELECTED_GAME(id)
 
          if (deleteGame) {
-            new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${foundGame?.game_video_name}`)).delete()
-
+            
             foundGame?.game_photo_name.forEach(e => {
                new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${e}`)).delete()
             })

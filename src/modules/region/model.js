@@ -144,8 +144,6 @@ class Region extends PG {
          SELECT
                   region_photo,
                   region_photo_name,
-                  region_video,
-                  region_video_name
          FROM  
                   regions
          WHERE

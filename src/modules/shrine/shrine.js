@@ -460,8 +460,7 @@ module.exports = {
          sendData.add_info = add_info
          sendData.address = address
          sendData.location = foundData?.location
-         sendData.phone = foundData?.phone
-         sendData.type = foundData?.type
+         sendData.phone = foundData?.phone        
          sendData.top = foundData?.top
          sendData.video = foundData?.video
          sendData.audio = foundData?.audio
@@ -770,8 +769,7 @@ module.exports = {
          if (deleteShrine) {
 
             new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${foundShrine?.shrine_audio_name}`)).delete()
-            new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${foundShrine?.shrine_video_name}`)).delete()
-
+            
             foundShrine?.shrine_photo_name.forEach(e => {
                new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${e}`)).delete()
             })
