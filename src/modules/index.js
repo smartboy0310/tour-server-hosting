@@ -26,8 +26,8 @@ router
       .get('/region/:search_data', Region.GET)
       .get('/region/single/:id', Authorized.AUTH, Region.GET_SINGLE)
       .get('/referens/region', Authorized.AUTH, Region.GET_REF)
-      .post('/region', Authorized.AUTH, FileUpload.array('media'), Region.POST)
-      .put('/region', Authorized.AUTH, FileUpload.array('media'), Region.PUT)
+      .post('/region', Authorized.AUTH, FileUpload.array('photo'), Region.POST)
+      .put('/region', Authorized.AUTH, FileUpload.array('photo'), Region.PUT)
       .put('/statusRegion', Authorized.AUTH, Region.EDIT_STATUS)
       .delete('/region', Authorized.AUTH, Region.DELETE)
 
@@ -67,8 +67,8 @@ router
 
       .get('/game', Game.GET)
       .get('/game/single/:id', Authorized.AUTH, Game.GET_SINGLE)
-      .post('/game', Authorized.AUTH, FileUpload.array('media'), Game.POST)
-      .put('/game', Authorized.AUTH, FileUpload.array('media'), Game.PUT)
+      .post('/game', Authorized.AUTH, FileUpload.array('photo'), Game.POST)
+      .put('/game', Authorized.AUTH, FileUpload.array('photo'), Game.PUT)
       .put('/statusGame', Authorized.AUTH, Game.EDIT_STATUS)
       .delete('/game', Authorized.AUTH, Game.DELETE)
 

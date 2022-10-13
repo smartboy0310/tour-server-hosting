@@ -248,7 +248,6 @@ module.exports = {
          sendData.status = foundData?.status
          sendData.region_id = foundData?.region_id
 
-
          if (foundData) {
             res.json({
                status: 200,
@@ -378,7 +377,6 @@ module.exports = {
             title.ru = e.title_ru
             title.en = e.title_en
 
-
             sendData.push({
                id: e.id,
                name: name,
@@ -498,7 +496,7 @@ module.exports = {
 
          const mediaUpload = req.files;
 
-         const { name : names, title : titles, info : infos, add_title : add_titles, add_info:  add_infos, address : addresss, location, phone, type, top, status, region_id } = req.body;
+         const { name : names, title : titles, info : infos, add_title : add_titles, add_info:  add_infos, address : addresss, location, phone, type, top, video, status, region_id } = req.body;
 
          const name = JSON.parse(names)
          const title = JSON.parse(titles)
@@ -537,9 +535,6 @@ module.exports = {
          const address_ru = address?.ru
          const address_en = address?.en                
 
-         const shrine_video = `${process.env.BACKEND_URL}/${mediaUpload?.video[0].filename}`
-         const shrine_video_name = mediaUpload?.video[0].filename
-
          const audio_oz = `${process.env.BACKEND_URL}/${mediaUpload?.audiooz[0].filename}`
          const audio_oz_name = mediaUpload?.audiooz[0].filename
          const audio_ru = `${process.env.BACKEND_URL}/${mediaUpload?.audioru[0].filename}`
@@ -566,7 +561,7 @@ module.exports = {
             shrine_photo_name.push(e.filename)
          })
 
-         const createShrine = await model.ADD_SHRINE(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, shrine_video, shrine_video_name, shrine_audio, shrine_audio_name, shrine_photo, shrine_photo_name, status, region_id)
+         const createShrine = await model.ADD_SHRINE(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, video, shrine_audio, shrine_audio_name, shrine_photo, shrine_photo_name, status, region_id)
 
          if (createShrine) {
             res.json({
@@ -596,7 +591,7 @@ module.exports = {
 
          const mediaUpload = req.files;
 
-         const { id, name : names, title : titles, info : infos, add_title : add_titles, add_info:  add_infos, address : addresss, location, phone, type, top, status, region_id } = req.body;
+         const { id, name : names, title : titles, info : infos, add_title : add_titles, add_info:  add_infos, address : addresss, location, phone, type, top, video, status, region_id } = req.body;
 
          const name = JSON.parse(names)
          const title = JSON.parse(titles)
@@ -635,8 +630,6 @@ module.exports = {
          const address_ru = address?.ru
          const address_en = address?.en        
         
-         let shrine_video = ''
-         let shrine_video_name = ''
          let audio_oz = ''
          let audio_oz_name = ''
          let audio_ru = ''
@@ -664,18 +657,7 @@ module.exports = {
             foundShrine?.shrine_photo_name.forEach(e => {
                shrine_photo_name.push(e)
             })
-         }
-
-         if (mediaUpload?.video) {
-            new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${foundShrine?.shrine_video_name}`)).delete()
-
-            shrine_video = `${process.env.BACKEND_URL}/${mediaUpload?.video[0].filename}`
-            shrine_video_name = mediaUpload?.video[0].filename
-         }
-         else {
-            shrine_video = foundShrine?.shrine_video
-            shrine_video_name = foundShrine?.shrine_video_name
-         }
+         }        
 
          if (mediaUpload?.audiooz) {
             new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${foundShrine?.shrine_audio_name.oz}`)).delete()
@@ -721,7 +703,7 @@ module.exports = {
             en: audio_en_name
          }
 
-         const updateShrine = await model.UPDATE_SHRINE(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, shrine_video, shrine_video_name, shrine_audio, shrine_audio_name, shrine_photo, shrine_photo_name, status, region_id)
+         const updateShrine = await model.UPDATE_SHRINE(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, add_title_oz, add_title_uz, add_title_ru, add_title_en, add_info_oz, add_info_uz, add_info_ru, add_info_en, address_oz, address_uz, address_ru, address_en, location, phone, type, top, video, shrine_audio, shrine_audio_name, shrine_photo, shrine_photo_name, status, region_id)
 
          if (updateShrine) {
             res.json({
