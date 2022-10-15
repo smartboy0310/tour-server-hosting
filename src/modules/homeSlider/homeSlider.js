@@ -8,18 +8,19 @@ module.exports = {
       try {
 
          const sendData = []
-         const title = {}
+
          const foundData = await model.ALL_SLIDER()
 
          foundData?.forEach(e => {
-            title.oz = e.title_oz
-            title.uz = e.title_uz
-            title.ru = e.title_ru
-            title.en = e.title_en
 
             sendData.push({
                id: e.id,
-               title: title,
+               title: {
+                  oz: e.title_oz,
+                  uz: e.title_uz,
+                  ru: e.title_ru,
+                  en: e.title_en
+               },
                photo: e.photo,
                status: e.status
             })
@@ -56,7 +57,7 @@ module.exports = {
          sendData.id = foundData?.id
          sendData.title = title
          sendData.photo = foundData?.photo
-         sendData.status = foundData?.status         
+         sendData.status = foundData?.status
 
          if (foundData) {
             res.json({
@@ -84,24 +85,23 @@ module.exports = {
       try {
 
          const sendData = {}
-         const title = {}
 
          const foundData = await model.ALL_ACTIVE_SLIDER()
 
          foundData?.forEach(e => {
-            
-            title.oz = e.title_oz
-            title.uz = e.title_uz
-            title.ru = e.title_ru
-            title.en = e.title_en
 
             sendData.push({
                id: e.id,
-               title: title,
+               title: {
+                  oz: e.title_oz,
+                  uz: e.title_uz,
+                  ru: e.title_ru,
+                  en: e.title_en
+               },
                photo: e.photo
             })
          })
-                  
+
          if (foundData) {
             res.json({
                status: 200,
@@ -128,7 +128,7 @@ module.exports = {
       try {
 
          const mediaUpload = req.file;
-         const { title : titles, status } = req.body;
+         const { title: titles, status } = req.body;
 
          const title = JSON.parse(titles)
 
@@ -169,7 +169,7 @@ module.exports = {
       try {
 
          const mediaUpload = req.file;
-         const { id, title : titles, status } = req.body;
+         const { id, title: titles, status } = req.body;
 
          const title = JSON.parse(titles)
 

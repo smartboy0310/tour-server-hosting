@@ -7,39 +7,36 @@ module.exports = {
    GET: async (req, res) => {
       try {
 
+         const sendData = []                       
          const { search_data, page, limit } = req.query;
          const countGame = await model.COUNT_GAMES()
          const countGameSearch = await model.COUNT_GAMES_SEARCH(`%${search_data}%`)
          if (search_data) {
-
-            const sendData = []
-            const name = {}
-            const title = {}
-            const info = {}            
-
+            
             const foundData = await model.SEARCH_GAMES(`%${search_data}%`, page, limit)
 
-            foundData?.forEach(e => {
-               name.oz = e.name_oz
-               name.uz = e.name_uz
-               name.ru = e.name_ru
-               name.en = e.name_en
-
-               title.oz = e.title_oz
-               title.uz = e.title_uz
-               title.ru = e.title_ru
-               title.en = e.title_en
-
-               info.oz = e.info_oz
-               info.uz = e.info_uz
-               info.ru = e.info_ru
-               info.en = e.info_en               
+            foundData?.forEach(e => {                             
 
                sendData.push({
                   id: e.id,
-                  name: name,
-                  title: title,
-                  info: info,
+                  name: {
+                     oz : e.name_oz,
+                     uz : e.name_uz,
+                     ru : e.name_ru,
+                     en : e.name_en
+                  },
+                  title: {
+                     oz : e.title_oz,
+                     uz : e.title_uz,
+                     ru : e.title_ru,
+                     en : e.title_en
+                  },
+                  info: {
+                     oz : e.info_oz,
+                     uz : e.info_uz,
+                     ru : e.info_ru,
+                     en : e.info_en
+                  },
                   video: e.video,
                   photo: e.photo,
                   type: e.type,
@@ -55,35 +52,31 @@ module.exports = {
                data: sendData
             })
          }
-         else {
-            const sendData = []
-            const name = {}
-            const title = {}
-            const info = {}
-            
+         else {                
             const foundData = await model.ALL_GAMES(page, limit)
 
             foundData?.forEach(e => {
-               name.oz = e.name_oz
-               name.uz = e.name_uz
-               name.ru = e.name_ru
-               name.en = e.name_en
-
-               title.oz = e.title_oz
-               title.uz = e.title_uz
-               title.ru = e.title_ru
-               title.en = e.title_en
-
-               info.oz = e.info_oz
-               info.uz = e.info_uz
-               info.ru = e.info_ru
-               info.en = e.info_en             
-
+               
                sendData.push({
                   id: e.id,
-                  name: name,
-                  title: title,
-                  info: info,
+                  name: {
+                     oz : e.name_oz,
+                     uz : e.name_uz,
+                     ru : e.name_ru,
+                     en : e.name_en
+                  },
+                  title: {
+                     oz : e.title_oz,
+                     uz : e.title_uz,
+                     ru : e.title_ru,
+                     en : e.title_en
+                  },
+                  info: {
+                     oz : e.info_oz,
+                     uz : e.info_uz,
+                     ru : e.info_ru,
+                     en : e.info_en
+                  },
                   video: e.video,
                   photo: e.photo,
                   type: e.type,
@@ -171,27 +164,26 @@ module.exports = {
    GET_ACTIVE: async (_, res) => {
       try {
 
-         const sendData = []
-         const name = {}
-         const title = {}
+         const sendData = []         
          
          const foundData = await model.ALL_ACTIVE_GAMES()
 
          foundData?.forEach(e => {
-            name.oz = e.name_oz
-            name.uz = e.name_uz
-            name.ru = e.name_ru
-            name.en = e.name_en
-
-            title.oz = e.title_oz
-            title.uz = e.title_uz
-            title.ru = e.title_ru
-            title.en = e.title_en
-
+            
             sendData.push({
                id: e.id,
-               name: name,
-               title: title,
+               name: {
+                  oz : e.name_oz,
+                  uz : e.name_uz,
+                  ru : e.name_ru,
+                  en : e.name_en
+               },
+               title: {
+                  oz : e.title_oz,
+                  uz : e.title_uz,
+                  ru : e.title_ru,
+                  en : e.title_en
+               },
                photo: e.photo              
             })
          })
@@ -280,26 +272,25 @@ module.exports = {
          const { reg_id } = req.params
 
          const sendData = []
-         const name = {}
-         const title = {}
-         
+                 
          const foundData = await model.GAME_BY_REGION(reg_id)
 
-         foundData?.forEach(e => {
-            name.oz = e.name_oz
-            name.uz = e.name_uz
-            name.ru = e.name_ru
-            name.en = e.name_en
-
-            title.oz = e.title_oz
-            title.uz = e.title_uz
-            title.ru = e.title_ru
-            title.en = e.title_en
+         foundData?.forEach(e => {           
 
             sendData.push({
                id: e.id,
-               name: name,
-               title: title,
+               name: {
+                  oz : e.name_oz,
+                  uz : e.name_uz,
+                  ru : e.name_ru,
+                  en : e.name_en
+               },
+               title: {
+                  oz : e.title_oz,
+                  uz : e.title_uz,
+                  ru : e.title_ru,
+                  en : e.title_en
+               },
                photo: e.photo              
             })
          })

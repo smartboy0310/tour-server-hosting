@@ -9,28 +9,27 @@ module.exports = {
          const { search_data } = req.params
 
          const sendData = []
-         const name = {}
-         const short_info = {}
-
+         
          if (search_data) {
 
             const foundData = await model.SEARCH_REGION(`%${search_data}%`)
 
             foundData?.forEach(e => {
-               name.oz = e.name_oz
-               name.uz = e.name_uz
-               name.ru = e.name_ru
-               name.en = e.name_en
-
-               short_info.oz = e.short_info_oz
-               short_info.uz = e.short_info_uz
-               short_info.ru = e.short_info_ru
-               short_info.en = e.short_info_en
-
+              
                sendData.push({
                   id: e.id,
-                  name: name,
-                  short_info: short_info,
+                  name: {
+                     oz : e.name_oz,
+                     uz : e.name_uz,
+                     ru : e.name_ru,
+                     en : e.name_en
+                  },
+                  short_info: {
+                     oz : e.short_info_oz,
+                     uz : e.short_info_uz,
+                     ru : e.short_info_ru,
+                     en : e.short_info_en
+                  },
                   shrine_count: e.shrine_count,
                   video: e.video,
                   photo: e.photo,
@@ -47,20 +46,21 @@ module.exports = {
             const foundData = await model.ALL_REGION()
 
             foundData?.forEach(e => {
-               name.oz = e.name_oz
-               name.uz = e.name_uz
-               name.ru = e.name_ru
-               name.en = e.name_en
-
-               short_info.oz = e.short_info_oz
-               short_info.uz = e.short_info_uz
-               short_info.ru = e.short_info_ru
-               short_info.en = e.short_info_en
-
+               
                sendData.push({
                   id: e.id,
-                  name: name,
-                  short_info: short_info,
+                  name: {
+                     oz : e.name_oz,
+                     uz : e.name_uz,
+                     ru : e.name_ru,
+                     en : e.name_en
+                  },
+                  short_info: {
+                     oz : e.short_info_oz,
+                     uz : e.short_info_uz,
+                     ru : e.short_info_ru,
+                     en : e.short_info_en
+                  },
                   shrine_count: e.shrine_count,
                   video: e.video,
                   photo: e.photo,
@@ -84,19 +84,18 @@ module.exports = {
    GET_REF: async (_, res) => {
       try {
          const sendData = []
-         const name = {}
          const refData = await model.REF_REGION()
 
-         refData?.forEach(e => {
-
-            name.oz = e.name_oz
-            name.uz = e.name_uz
-            name.ru = e.name_ru
-            name.en = e.name_en
+         refData?.forEach(e => {          
 
             sendData.push({
                id: e.id,
-               name: name
+               name: {
+                  oz : e.name_oz,
+                  uz : e.name_uz,
+                  ru : e.name_ru,
+                  en : e.name_en
+               }
             })
          })
          res.json({
@@ -167,25 +166,25 @@ module.exports = {
       try {
 
          const sendData = []
-         const name = {}
-         const short_info = {}
+         
          const foundData = await model.ALL_ACTIVE_REGION()
 
          foundData?.forEach(e => {
-            name.oz = e.name_oz
-            name.uz = e.name_uz
-            name.ru = e.name_ru
-            name.en = e.name_en
-
-            short_info.oz = e.short_info_oz
-            short_info.uz = e.short_info_uz
-            short_info.ru = e.short_info_ru
-            short_info.en = e.short_info_en
-
+            
             sendData.push({
                id: e.id,
-               name: name,
-               short_info: short_info,
+               name: {
+                  oz : e.name_oz,
+                  uz : e.name_uz,
+                  ru : e.name_ru,
+                  en : e.name_en
+               },
+               short_info: {
+                  oz : e.short_info_oz,
+                  uz : e.short_info_uz,
+                  ru : e.short_info_ru,
+                  en : e.short_info_en
+               },
                shrine_count: e.shrine_count,
                video: e.video,
                photo: e.photo,

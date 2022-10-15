@@ -188,8 +188,8 @@ class Games extends PG {
    SELECTED_GAME(game_id) {
       return this.fetch(`
          SELECT
-                  game_video, 
-                  game_video_name  
+                  game_photo, 
+                  game_photo_name  
          FROM
                   games
          WHERE

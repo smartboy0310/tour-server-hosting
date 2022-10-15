@@ -9,46 +9,43 @@ module.exports = {
          const { type } = req.params
          const { search_data, page, limit, } = req.query
 
-         const sendData = []
-         const name = {}
-         const title = {}
-         const info = {}
-         const address = {}         
+         const sendData = []                
          
          const countObject = await model.COUNT_OBJECTS(type)
-         const countTrainsSearch = await model.COUNT_OBJECTS_SEARCH(`%${search_data}%`, type)
+         const countObjectSearch = await model.COUNT_OBJECTS_SEARCH(`%${search_data}%`, type)
 
          if (search_data) {
 
             const foundData = await model.SEARCH_TRAINS(`%${search_data}%`, page, limit, type)
 
             foundData?.forEach(e => {
-               name.oz = e.name_oz
-               name.uz = e.name_uz
-               name.ru = e.name_ru
-               name.en = e.name_en
-
-               title.oz = e.title_oz
-               title.uz = e.title_uz
-               title.ru = e.title_ru
-               title.en = e.title_en
-
-               info.oz = e.info_oz
-               info.uz = e.info_uz
-               info.ru = e.info_ru
-               info.en = e.info_en
-
-               address.oz = e.address_oz
-               address.uz = e.address_uz
-               address.ru = e.address_ru
-               address.en = e.address_en              
                
                sendData.push({
                   id: e.id,
-                  name: name,
-                  title: title,
-                  info: info,
-                  address: address,
+                  name: {
+                     oz : e.name_oz,
+                     uz : e.name_uz,
+                     ru : e.name_ru,
+                     en : e.name_en
+                  },
+                  title: {
+                     oz : e.title_oz,
+                     uz : e.title_uz,
+                     ru : e.title_ru,
+                     en : e.title_en
+                  },
+                  info: {
+                     oz : e.info_oz,
+                     uz : e.info_uz,
+                     ru : e.info_ru,
+                     en : e.info_en
+                  },
+                  address: {
+                     oz : e.address_oz,
+                     uz : e.address_uz,
+                     ru : e.address_ru,
+                     en : e.address_en
+                  },
                   location: e.location,
                   phone: e.phone,
                   link: e.link,
@@ -62,8 +59,8 @@ module.exports = {
             })
             res.json({
                status: 200,
-               totalPages: Math.ceil(parseInt(countTrainsSearch?.count) / limit),
-               totalItems: parseInt(countTrainsSearch?.count),
+               totalPages: Math.ceil(parseInt(countObjectSearch?.count) / limit),
+               totalItems: parseInt(countObjectSearch?.count),
                data: sendData
             })
          }
@@ -72,32 +69,33 @@ module.exports = {
             const foundData = await model.ALL_OBJECTS(page, limit, type)
 
             foundData?.forEach(e => {
-               name.oz = e.name_oz
-               name.uz = e.name_uz
-               name.ru = e.name_ru
-               name.en = e.name_en
-
-               title.oz = e.title_oz
-               title.uz = e.title_uz
-               title.ru = e.title_ru
-               title.en = e.title_en
-
-               info.oz = e.info_oz
-               info.uz = e.info_uz
-               info.ru = e.info_ru
-               info.en = e.info_en
-
-               address.oz = e.address_oz
-               address.uz = e.address_uz
-               address.ru = e.address_ru
-               address.en = e.address_en              
-
+               
                sendData.push({
                   id: e.id,
-                  name: name,
-                  title: title,
-                  info: info,
-                  address: address,
+                  name: {
+                     oz : e.name_oz,
+                     uz : e.name_uz,
+                     ru : e.name_ru,
+                     en : e.name_en
+                  },
+                  title: {
+                     oz : e.title_oz,
+                     uz : e.title_uz,
+                     ru : e.title_ru,
+                     en : e.title_en
+                  },
+                  info: {
+                     oz : e.info_oz,
+                     uz : e.info_uz,
+                     ru : e.info_ru,
+                     en : e.info_en
+                  },
+                  address: {
+                     oz : e.address_oz,
+                     uz : e.address_uz,
+                     ru : e.address_ru,
+                     en : e.address_en
+                  },
                   location: e.location,
                   phone: e.phone,
                   link: e.link,
@@ -198,27 +196,26 @@ module.exports = {
       try {
          const { type, region_id } = req.params
 
-         const sendData = []
-         const name = {}
-         const title = {}
+         const sendData = []        
 
          const foundData = await model.OBJECTS_BY_REGION(region_id, type)
 
          foundData?.forEach(e => {
-            name.oz = e.name_oz
-            name.uz = e.name_uz
-            name.ru = e.name_ru
-            name.en = e.name_en
-
-            title.oz = e.title_oz
-            title.uz = e.title_uz
-            title.ru = e.title_ru
-            title.en = e.title_en
-
+            
             sendData.push({
                id: e.id,
-               name: name,
-               title: title,
+               name: {
+                  oz : e.name_oz,
+                  uz : e.name_uz,
+                  ru : e.name_ru,
+                  en : e.name_en
+               },
+               title: {
+                  oz : e.title_oz,
+                  uz : e.title_uz,
+                  ru : e.title_ru,
+                  en : e.title_en
+               },
                photo: e.photo
             })
          })

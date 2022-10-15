@@ -8,33 +8,31 @@ module.exports = {
       try {
 
          const sendData = []
-         const name = {}
-         const role = {}
-         const info = {}
-
+         
          const foundData = await model.ALL_LEADER()
 
          foundData?.forEach(e => {
-            name.oz = e.name_oz
-            name.uz = e.name_uz
-            name.ru = e.name_ru
-            name.en = e.name_en
-
-            role.oz = e.title_oz
-            role.uz = e.title_uz
-            role.ru = e.title_ru
-            role.en = e.title_en
-
-            info.oz = e.info_oz
-            info.uz = e.info_uz
-            info.ru = e.info_ru
-            info.en = e.info_en
-
+            
             sendData.push({
                id: e.id,
-               name: name,
-               role: role,
-               info: info,
+               name: {
+                  oz : e.name_oz,
+                  uz : e.name_uz,
+                  ru : e.name_ru,
+                  en : e.name_en
+               },
+               role: {
+                  oz : e.role_oz,
+                  uz : e.role_uz,
+                  ru : e.role_ru,
+                  en : e.role_en
+               },
+               info: {
+                  oz : e.info_oz,
+                  uz : e.info_uz,
+                  ru : e.info_ru,
+                  en : e.info_en
+               },
                phone: e.phone,
                email: e.email,
                photo: e.photo,
@@ -59,33 +57,31 @@ module.exports = {
       try {
 
          const sendData = []
-         const name = {}
-         const role = {}
-         const info = {}
-
+         
          const foundData = await model.ACTIVE_LEADER()
 
          foundData?.forEach(e => {
-            name.oz = e.name_oz
-            name.uz = e.name_uz
-            name.ru = e.name_ru
-            name.en = e.name_en
-
-            role.oz = e.title_oz
-            role.uz = e.title_uz
-            role.ru = e.title_ru
-            role.en = e.title_en
-
-            info.oz = e.info_oz
-            info.uz = e.info_uz
-            info.ru = e.info_ru
-            info.en = e.info_en
-
+            
             sendData.push({
                id: e.id,
-               name: name,
-               role: role,
-               info: info,
+               name: {
+                  oz : e.name_oz,
+                  uz : e.name_uz,
+                  ru : e.name_ru,
+                  en : e.name_en
+               },
+               role: {
+                  oz : e.role_oz,
+                  uz : e.role_uz,
+                  ru : e.role_ru,
+                  en : e.role_en
+               },
+               info: {
+                  oz : e.info_oz,
+                  uz : e.info_uz,
+                  ru : e.info_ru,
+                  en : e.info_en
+               },
                phone: e.phone,
                email: e.email,
                photo: e.photo,

@@ -7,39 +7,36 @@ module.exports = {
    GET: async (req, res) => {
       try {
 
+         const sendData = []    
          const { search_data, page, limit } = req.query;
          const countFood = await model.COUNT_FOODS()
          const countFoodSearch = await model.COUNT_FOODS_SEARCH(`%${search_data}%`)
-         if (search_data) {
-
-            const sendData = []
-            const name = {}
-            const title = {}
-            const info = {}
+         if (search_data) {                   
            
             const foundData = await model.SEARCH_FOODS(`%${search_data}%`, page, limit)
 
-            foundData?.forEach(e => {
-               name.oz = e.name_oz
-               name.uz = e.name_uz
-               name.ru = e.name_ru
-               name.en = e.name_en
-
-               title.oz = e.title_oz
-               title.uz = e.title_uz
-               title.ru = e.title_ru
-               title.en = e.title_en
-
-               info.oz = e.info_oz
-               info.uz = e.info_uz
-               info.ru = e.info_ru
-               info.en = e.info_en               
-
+            foundData?.forEach(e => {              
+                          
                sendData.push({
                   id: e.id,
-                  name: name,
-                  title: title,
-                  info: info,
+                  name: {
+                     oz : e.name_oz,
+                     uz : e.name_uz,
+                     ru : e.name_ru,
+                     en : e.name_en
+                  },
+                  title: {
+                     oz : e.title_oz,
+                     uz : e.title_uz,
+                     ru : e.title_ru,
+                     en : e.title_en
+                  },
+                  info: {
+                     oz : e.info_oz,
+                     uz : e.info_uz,
+                     ru : e.info_ru,
+                     en : e.info_en
+                  },
                   photo: e.photo,
                   status: e.status                  
                })
@@ -53,35 +50,31 @@ module.exports = {
             })
          }
          else {
-
-            const sendData = []
-            const name = {}
-            const title = {}
-            const info = {}
            
             const foundData = await model.ALL_FOODS(page, limit)
 
             foundData?.forEach(e => {
-               name.oz = e.name_oz
-               name.uz = e.name_uz
-               name.ru = e.name_ru
-               name.en = e.name_en
-
-               title.oz = e.title_oz
-               title.uz = e.title_uz
-               title.ru = e.title_ru
-               title.en = e.title_en
-
-               info.oz = e.info_oz
-               info.uz = e.info_uz
-               info.ru = e.info_ru
-               info.en = e.info_en               
-
+               
                sendData.push({
                   id: e.id,
-                  name: name,
-                  title: title,
-                  info: info,
+                  name: {
+                     oz : e.name_oz,
+                     uz : e.name_uz,
+                     ru : e.name_ru,
+                     en : e.name_en
+                  },
+                  title: {
+                     oz : e.title_oz,
+                     uz : e.title_uz,
+                     ru : e.title_ru,
+                     en : e.title_en
+                  },
+                  info: {
+                     oz : e.info_oz,
+                     uz : e.info_uz,
+                     ru : e.info_ru,
+                     en : e.info_en
+                  },
                   photo: e.photo,
                   status: e.status                  
                })
@@ -163,27 +156,26 @@ module.exports = {
    GET_ACTIVE: async (_, res) => {
       try {
          
-         const sendData = []
-         const name = {}
-         const title = {}
+         const sendData = []         
                
          const foundData = await model.ALL_ACTIVE_FOODS()
 
          foundData?.forEach(e => {
-            name.oz = e.name_oz
-            name.uz = e.name_uz
-            name.ru = e.name_ru
-            name.en = e.name_en
-
-            title.oz = e.title_oz
-            title.uz = e.title_uz
-            title.ru = e.title_ru
-            title.en = e.title_en                      
-
+                                 
             sendData.push({
                id: e.id,
-               name: name,
-               title: title,
+               name: {
+                  oz : e.name_oz,
+                  uz : e.name_uz,
+                  ru : e.name_ru,
+                  en : e.name_en
+               },
+               title: {
+                  oz : e.title_oz,
+                  uz : e.title_uz,
+                  ru : e.title_ru,
+                  en : e.title_en
+               },
                photo: e.photo                                 
             })
          })

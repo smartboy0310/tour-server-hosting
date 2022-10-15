@@ -143,7 +143,7 @@ class Region extends PG {
       return this.fetch(`
          SELECT
                   region_photo,
-                  region_photo_name,
+                  region_photo_name
          FROM  
                   regions
          WHERE
