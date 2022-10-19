@@ -288,10 +288,8 @@ module.exports = {
 
          uploadMedia.forEach(e => {
             food_photo.push(`${process.env.BACKEND_URL}/${e.filename}`)
-            food_photo_name.push(food_photo.push(e.filename))
+            food_photo_name.push(e.filename)
          })
-
-
 
          const createdFood = await model.ADD_FOOD(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, food_photo, food_photo_name, status)
 
@@ -356,7 +354,7 @@ module.exports = {
 
             uploadMedia.forEach(e => {
                food_photo.push(`${process.env.BACKEND_URL}/${e.filename}`)
-               food_photo_name.push(food_photo.push(e.filename))
+               food_photo_name.push(e.filename)
             })
          }
          else {
