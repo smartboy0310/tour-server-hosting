@@ -285,8 +285,8 @@ module.exports = {
 
          const food_photo = []
          const food_photo_name = []
-
-         uploadMedia.forEach(e => {
+        
+         uploadMedia?.forEach(e => {
             food_photo.push(`${process.env.BACKEND_URL}/${e.filename}`)
             food_photo_name.push(e.filename)
          })
@@ -346,13 +346,13 @@ module.exports = {
 
          const foundFood = await model.SELECTED_FOOD(id)
 
-         if (uploadMedia.length) {
+         if (uploadMedia?.length) {
 
-            foundFood?.food_photo_name.forEach(e =>
-               new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media',`${e}`)).delete()
-            )
+            foundFood?.food_photo_name.forEach(e => {
+               new FS(path.resolve(__dirname, '..', '..', '..', 'public', 'media', `${e}`)).delete()
+            })
 
-            uploadMedia.forEach(e => {
+            uploadMedia?.forEach(e => {
                food_photo.push(`${process.env.BACKEND_URL}/${e.filename}`)
                food_photo_name.push(e.filename)
             })

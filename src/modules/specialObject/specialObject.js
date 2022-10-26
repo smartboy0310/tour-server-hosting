@@ -390,6 +390,7 @@ module.exports = {
 
          const shrineId = shrine_id ? shrine_id : null
          const workTime = work_time ? work_time : null
+         const links = link ? link : null
 
          const name = JSON.parse(names)
          const title = JSON.parse(titles)
@@ -425,7 +426,7 @@ module.exports = {
          })
 
 
-         const createObject = await model.ADD_OBJECT(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location, phone, workTime, link, photo, photo_name, type, status, region_id, shrineId)
+         const createObject = await model.ADD_OBJECT(name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location, phone, workTime, links, photo, photo_name, type, status, region_id, shrineId)
 
          if (createObject) {
             res.json({
@@ -456,7 +457,11 @@ module.exports = {
          const { type } = req.params
          const mediaUpload = req.files;
 
-         const { id, name : names, title : titles, info : infos, address : addresss, location, phone, link, status, region_id, shrine_id } = req.body;
+         const { id, name : names, title : titles, info : infos, address : addresss, location, phone, link, work_time, status, region_id, shrine_id } = req.body;
+
+         const shrineId = shrine_id ? shrine_id : null
+         const workTime = work_time ? work_time : null
+         const links = link ? link : null
 
          const name = JSON.parse(names)
          const title = JSON.parse(titles)
@@ -508,7 +513,7 @@ module.exports = {
             })
          }
 
-         const updateObject = await model.UPDATE_OBJECT(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location, phone, link, photo, photo_name, type, status, region_id, shrine_id)
+         const updateObject = await model.UPDATE_OBJECT(id, name_oz, name_uz, name_ru, name_en, title_oz, title_uz, title_ru, title_en, info_oz, info_uz, info_ru, info_en, address_oz, address_uz, address_ru, address_en, location, phone, workTime, links, photo, photo_name, type, status, region_id, shrineId)
 
          if (updateObject) {
             res.json({

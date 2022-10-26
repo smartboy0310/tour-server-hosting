@@ -140,7 +140,7 @@ router
       .get('/activeShrine/:reg_id', Shrine.GET_ACTIVE)
       .get('/activeShrine/single/:id', Shrine.GET_ACTIVE_SINGLE)
 
-      .get('/activeObjects/:type/:reg_id', SpecialObject.GET_BY_REGION)
+      .get('/activeObjects/:type/:region_id', SpecialObject.GET_BY_REGION)
       .get('/activeObjects/:type', SpecialObject.GET_BY_SHRINE)
       .get('/activeObjects/:type/single/:id', SpecialObject.GET_ACTIVE_SINGLE)
      

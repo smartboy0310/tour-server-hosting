@@ -90,7 +90,7 @@ CREATE TABLE games (
    game_is_delete boolean DEFAULT false,
    game_created_at timestamp DEFAULT CURRENT_TIMESTAMP,
    game_deleted_at timestamp DEFAULT CURRENT_TIMESTAMP,
-   region_id int not null REFERENCES regions(region_id)
+   region_id int REFERENCES regions(region_id)
 );
 
 CREATE TABLE foods (

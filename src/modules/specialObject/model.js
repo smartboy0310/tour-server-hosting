@@ -310,7 +310,7 @@ class SpecialObject extends PG {
                         object_address_en = $17,
                         object_location = $18,
                         object_phone = $19,
-                        object_work_time = $20
+                        object_work_time = $20,
                         object_link = $21,
                         object_photo = $22,
                         object_photo_name = $23,
