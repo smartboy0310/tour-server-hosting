@@ -246,7 +246,6 @@ module.exports = {
       try {
          const { type } = req.params
          const { reg_id, shrine_id } = req.query
-
          const sendData = {}
          const name = {}
          const title = {}
@@ -289,10 +288,10 @@ module.exports = {
             title.ru = foundByRegion[0]?.title_ru
             title.en = foundByRegion[0]?.title_en
 
-            sendData.id = foundByShrine?.id
+            sendData.id = foundByRegion[0]?.id
             sendData.name = name
             sendData.title = title
-            sendData.photo = foundByShrine?.photo
+            sendData.photo = foundByRegion[0]?.photo
 
             res.json({
                status: 200,

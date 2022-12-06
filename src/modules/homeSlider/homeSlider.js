@@ -84,12 +84,13 @@ module.exports = {
    GET_ACTIVE: async (_, res) => {
       try {
 
-         const sendData = {}
+         const sendData = []
 
          const foundData = await model.ALL_ACTIVE_SLIDER()
 
          foundData?.forEach(e => {
 
+            
             sendData.push({
                id: e.id,
                title: {

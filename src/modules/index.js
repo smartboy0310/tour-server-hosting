@@ -15,6 +15,7 @@ const Participant = require('./participant/participant')
 const General = require('./general/general')
 const HomeSlider = require('./homeSlider/homeSlider')
 const Statistics = require('./statistics/statistics')
+const Searchs = require('./searchs/searchs')
 const SpecialObject = require('./specialObject/specialObject')
 
 router
@@ -145,5 +146,8 @@ router
       .get('/activeObjects/:type/single/:id', SpecialObject.GET_ACTIVE_SINGLE)
      
       .get('/statistics', Statistics.GET)
+      .get('/search', Searchs.GET_SEARCH)
+
+      
 
 module.exports = router
