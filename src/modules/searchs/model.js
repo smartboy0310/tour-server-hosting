@@ -13,7 +13,8 @@ class Searchs extends PG {
                shrine_title_uz AS title_uz,
                shrine_title_ru AS title_ru,
                shrine_title_en AS title_en,               
-               shrine_photo AS photo               
+               shrine_photo AS photo,
+               region_id               
          FROM
                   shrines
          WHERE 
@@ -33,11 +34,12 @@ class Searchs extends PG {
                shrine_title_uz AS title_uz,
                shrine_title_ru AS title_ru,
                shrine_title_en AS title_en,               
-               shrine_photo AS photo               
+               shrine_photo AS photo,
+               region_id              
          FROM
                   shrines
          WHERE 
-                  shrine_is_delete = false AND shrine_status = true AND shrine_type = $2
+                  shrine_is_delete = false AND shrine_status = true AND shrine_type = $1
       `, type)
    }
 
@@ -53,7 +55,8 @@ class Searchs extends PG {
                shrine_title_uz AS title_uz,
                shrine_title_ru AS title_ru,
                shrine_title_en AS title_en,               
-               shrine_photo AS photo               
+               shrine_photo AS photo,
+               region_id               
          FROM
                   shrines
          WHERE 
@@ -73,7 +76,8 @@ class Searchs extends PG {
                shrine_title_uz AS title_uz,
                shrine_title_ru AS title_ru,
                shrine_title_en AS title_en,               
-               shrine_photo AS photo               
+               shrine_photo AS photo,
+               region_id              
          FROM
                   shrines
          WHERE 
@@ -93,7 +97,9 @@ class Searchs extends PG {
                object_title_uz AS title_uz,
                object_title_ru AS title_ru,
                object_title_en AS title_en,
-               object_photo AS photo
+               object_photo AS photo,
+               region_id,
+               shrine_id
       FROM
             special_object
       WHERE 
@@ -115,11 +121,13 @@ class Searchs extends PG {
                object_title_uz AS title_uz,
                object_title_ru AS title_ru,
                object_title_en AS title_en,
-               object_photo AS photo
+               object_photo AS photo,
+               region_id,
+               shrine_id
       FROM
             special_object
       WHERE 
-               object_is_delete = false AND object_type = $2 AND object_status = true 
+               object_is_delete = false AND object_type = $1 AND object_status = true 
       ORDER BY
                object_id DESC
    `, type)
